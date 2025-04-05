@@ -121,11 +121,11 @@ public class ProxyAutenticacion {
         return usuario;
     }
 
-    public Configuracion obtenerConfiguracion(String correo) throws SQLException {
+    public Configuracion obtenerConfiguracion(String id) throws SQLException {
         Configuracion config = null;
-        String query = "SELECT * FROM configuracion WHERE correo = ?";
+        String query = "SELECT * FROM configuracion WHERE id = ?";
         try (PreparedStatement ps = conexion.getConexion().prepareStatement(query)) {
-            ps.setString(1, correo);
+            ps.setString(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     String idiomaStr = rs.getString("idioma");

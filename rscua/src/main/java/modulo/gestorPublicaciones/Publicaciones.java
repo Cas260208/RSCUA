@@ -4,17 +4,13 @@ import java.sql.Timestamp;
 
 public class Publicaciones {
 
-    public enum TipoContenido {
-        TEXTO, IMAGEN, VIDEO
-    }
-
     public enum Privacidad {
         PUBLICO, AMIGOS, PRIVADO
     }
     private int id;
     private int usuarioId;
-    private String contenido;
-    private TipoContenido tipoContenido;
+    private String texto;
+    private String imagen;
     private Timestamp fechaPublicacion;
     private String etiquetas;
     private Privacidad privacidad;
@@ -23,13 +19,15 @@ public class Publicaciones {
     private Timestamp fechaEliminacion;
     private Timestamp fechaModificacion;
 
-    public Publicaciones(int id, int usuarioId, String contenido, TipoContenido tipoContenido, Timestamp fechaPublicacion,
+
+
+    public Publicaciones(int id, int usuarioId, String texto, String imagen, Timestamp fechaPublicacion,
                          String etiquetas, Privacidad privacidad, Integer adminEliminoId, Integer adminModificoId,
                          Timestamp fechaEliminacion, Timestamp fechaModificacion) {
         this.id = id;
         this.usuarioId = usuarioId;
-        this.contenido = contenido;
-        this.tipoContenido = tipoContenido;
+        this.texto = texto;
+        this.imagen = imagen;
         this.fechaPublicacion = fechaPublicacion;
         this.etiquetas = etiquetas;
         this.privacidad = privacidad;
@@ -58,22 +56,6 @@ public class Publicaciones {
 
     public void setUsuarioId(int usuarioId) {
         this.usuarioId = usuarioId;
-    }
-
-    public String getContenido() {
-        return contenido;
-    }
-
-    public void setContenido(String contenido) {
-        this.contenido = contenido;
-    }
-
-    public TipoContenido getTipoContenido() {
-        return tipoContenido;
-    }
-
-    public void setTipoContenido(TipoContenido tipoContenido) {
-        this.tipoContenido = tipoContenido;
     }
 
     public Timestamp getFechaPublicacion() {
@@ -130,5 +112,21 @@ public class Publicaciones {
 
     public void setFechaModificacion(Timestamp fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
+    }
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

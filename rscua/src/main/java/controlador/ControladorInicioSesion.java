@@ -38,7 +38,7 @@ public class ControladorInicioSesion extends HttpServlet {
             //Consigue información básica de usuario (desde controlador <- gestor -> proxyAuth -> conexion -> BdD)
             usuario = ga.getUsuario(correo);
             //Obtiene configuracion
-            Configuracion configuracion = ga.getConfiguracion(correo);
+            Configuracion configuracion = ga.getConfiguracion(Integer.toString(usuario.getId()));
             //Completa objeto sesion (desde controlador(esta clase))
             session.setAttribute("usuario", usuario);
             session.setAttribute("configuracion", configuracion);

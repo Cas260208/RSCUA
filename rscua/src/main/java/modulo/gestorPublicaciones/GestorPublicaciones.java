@@ -1,25 +1,33 @@
 package modulo.gestorPublicaciones;
 
-import servicios.ProxyPublicaciones;
+import servicios.ProxyPublicacionesCommand;
+import servicios.ProxyPublicacionesQuery;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class GestorPublicaciones {
-    private ProxyPublicaciones proxyPublicaciones;
+    private ProxyPublicacionesCommand proxyPublicacionesCommand;
+    private ProxyPublicacionesQuery proxyPublicacionesQuery;
 
     public GestorPublicaciones() {
         try {
-            proxyPublicaciones = new ProxyPublicaciones();
+            proxyPublicacionesCommand = new ProxyPublicacionesCommand();
         } catch (SQLException e) {
-            System.out.println("Error al inicializar ProxyPublicaciones");
+            System.out.println("Error al inicializar ProxyPublicacionesCommand");
+            e.printStackTrace();
+        }
+        try {
+            proxyPublicacionesQuery = new ProxyPublicacionesQuery();
+        } catch (SQLException e) {
+            System.out.println("Error al inicializar ProxyPublicacionesQuery");
             e.printStackTrace();
         }
     }
 
     public boolean crearPublicacion(Publicaciones nuevaPublicacion) {
         try {
-            return proxyPublicaciones.crearPublicacion(nuevaPublicacion);
+            return proxyPublicacionesCommand.crearPublicacion(nuevaPublicacion);
         } catch (SQLException e) {
             System.out.println("Error al crear publicación");
             e.printStackTrace();
@@ -29,7 +37,7 @@ public class GestorPublicaciones {
 
     public boolean eliminarPublicacion(int idPublicacion) {
         try {
-            return proxyPublicaciones.eliminarPublicacion(idPublicacion);
+            return proxyPublicacionesCommand.eliminarPublicacion(idPublicacion);
         } catch (SQLException e) {
             System.out.println("Error al eliminar publicación");
             e.printStackTrace();
@@ -39,7 +47,7 @@ public class GestorPublicaciones {
 
     public List<Publicaciones> obtenerPublicacionesPorUsuario(int usuarioId) {
         try {
-            return proxyPublicaciones.obtenerPublicacionesPorUsuario(usuarioId);
+            return proxyPublicacionesQuery.obtenerPublicacionesPerfil(usuarioId);
         } catch (SQLException e) {
             System.out.println("Error al obtener publicaciones");
             e.printStackTrace();
@@ -49,7 +57,7 @@ public class GestorPublicaciones {
 
     public boolean editarPublicacion(Publicaciones publicacionEditada) {
         try {
-            return proxyPublicaciones.editarPublicacion(publicacionEditada);
+            return proxyPublicacionesCommand.editarPublicacion(publicacionEditada);
         } catch (SQLException e) {
             System.out.println("Error al editar publicación");
             e.printStackTrace();
