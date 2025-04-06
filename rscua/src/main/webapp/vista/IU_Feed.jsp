@@ -1,15 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="modulo.gestorAutenticacion.Usuario" %>
+<%
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
+%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>RSCUA</title>
-    <link rel="stylesheet" href="vista/css/FeedStyle.css">
+    <title>RSCUA - Feed</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/vista/css/FeedStyle.css">
 </head>
 <body>
-<div class="barra">
-    <jsp:include page="header.jsp"></jsp:include>
-</div>
+<jsp:include page="header.jsp" />
 
     <div class="Historias">
         <div class="crear-historia">
@@ -41,7 +43,7 @@
 
     <div class="IU_CrearPublicacion">
         <jsp:include page="IU_CrearPublicacion.jsp"></jsp:include>
-        <jsp:include page="IU_Publicacion.jsp"></jsp:include>
+        <jsp:include page="IU_VerPublicacion.jsp" />
     </div>
 </body>
 </html>
