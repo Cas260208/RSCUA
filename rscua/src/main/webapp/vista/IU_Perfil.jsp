@@ -18,7 +18,6 @@
 
         /* Foto de perfil e información principal */
 
-        /* Foto de perfil e información principal */
 
         .perfil-header {
             text-align: center;

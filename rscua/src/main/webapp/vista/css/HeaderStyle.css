@@ -1,0 +1,153 @@
+:root {
+    --bg-color: white;
+    --text-color: black;
+    --header-bg: white;
+    --search-border: black;
+    --search-bg: white;
+    --panel-bg: white;
+    --hover-bg: #f0f0f0;
+    --subpanel-bg: #f9f9f9;
+    --panel-button-bg: #ddd;
+    --panel-button-color: black;
+    --panel-button-hover-bg: #bbb;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-color, white);
+    color: var(--text-color, black);
+    margin: 0;
+    padding: 0;
+    /* Para evitar que la barra fija tape el contenido */
+    padding-top: 80px;
+}
+
+.barra {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 40px;
+    background-color: var(--header-bg, white);
+    border-bottom: 1px solid var(--search-border, black);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.barra img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: transparent;
+    padding: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.barra img:hover {
+    transform: scale(1.1);
+}
+
+.barra button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.barra .busqueda {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--search-border, black);
+    border-radius: 15px;
+    padding: 5px 10px;
+    background-color: var(--search-bg, white);
+    width: 600px;
+}
+
+.barra .busqueda input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    padding: 5px;
+    font-size: 16px;
+    background-color: transparent;
+    color: inherit;
+}
+
+.barra .busqueda button img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* Estilos de configuraciones y paneles */
+.configuraciones {
+    margin: 20px 50px;
+    padding: 20px 30px;
+    border: 1px solid var(--search-border, black);
+    border-radius: 15px;
+    background-color: var(--panel-bg, white);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.configuraciones h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.configuraciones button {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.configuraciones button:hover {
+    background-color: var(--hover-bg, #f0f0f0);
+    transform: scale(1.02);
+}
+
+.configuraciones button img {
+    margin-right: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.panel-tema, .panel-idioma, .panel-privacidad {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid var(--search-border, #ccc);
+    border-radius: 10px;
+    background-color: var(--subpanel-bg, #f9f9f9);
+}
+
+.panel button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--panel-button-bg, #ddd);
+    color: var(--panel-button-color, black);
+}
+
+.panel button:hover {
+    background-color: var(--panel-button-hover-bg, #bbb);
+}

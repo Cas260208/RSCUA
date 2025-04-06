@@ -38,11 +38,9 @@
         </div>
     </div>
 
-    <div class="home">
-    </div>
 
     <div class="IU_CrearPublicacion">
-        <jsp:include page="IU_CrearPublicacion.jsp"></jsp:include>
+        <jsp:include page="IU_CrearPublicacion.jsp"/>
         <jsp:include page="IU_VerPublicacion.jsp" />
     </div>
 </body>

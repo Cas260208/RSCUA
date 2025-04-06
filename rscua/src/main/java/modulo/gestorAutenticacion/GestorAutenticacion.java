@@ -43,11 +43,11 @@ public class GestorAutenticacion {
         }
     }
 
-    public Configuracion getConfiguracion(String correo) {
+    public Configuracion getConfiguracion(int usuarioId) {
         try {
-            return pAutenticacion.obtenerConfiguracion(correo);
+            return pAutenticacion.obtenerConfiguracion(usuarioId);
         } catch (SQLException e) {
-            System.out.println("\n\nError al obtener usuario\n\n");
+            System.out.println("\n\nError al obtener configuración de usuario\n\n");
             e.printStackTrace();
             return null;
         }

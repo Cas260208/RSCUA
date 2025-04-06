@@ -121,11 +121,11 @@ public class ProxyAutenticacion {
         return usuario;
     }
 
-    public Configuracion obtenerConfiguracion(String correo) throws SQLException {
+    public Configuracion obtenerConfiguracion(int usuarioId) throws SQLException {
         Configuracion config = null;
-        String query = "SELECT * FROM configuracion WHERE correo = ?";
+        String query = "SELECT * FROM configuracion WHERE usuario_id = ?";
         try (PreparedStatement ps = conexion.getConexion().prepareStatement(query)) {
-            ps.setString(1, correo);
+            ps.setInt(1, usuarioId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     String idiomaStr = rs.getString("idioma");
@@ -135,7 +135,7 @@ public class ProxyAutenticacion {
                     Configuracion.Privacidad privacidad = Configuracion.Privacidad.valueOf(privacidadStr.toUpperCase());
                     Configuracion.Tema tema = Configuracion.Tema.valueOf(temaStr.toUpperCase());
 
-                    config = new Configuracion(0, idiomaStr, privacidad, tema);
+                    config = new Configuracion(usuarioId, idiomaStr, privacidad, tema);
                 }
             }
         }
