@@ -8,14 +8,15 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
     <script>
-        // Tu configuración de Firebase (obtenida de la consola)
+        //configuración de Firebase (obtenida de la consola)
         const firebaseConfig = {
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_AUTH_DOMAIN",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_STORAGE_BUCKET",
-            messagingSenderId: "TU_MESSAGING_SENDER_ID",
-            appId: "TU_APP_ID"
+            apiKey: "AIzaSyAsnfDMrOsSDCxTaLXLYTVWY67zIlMtH8s",
+            authDomain: "rscua-79bbf.firebaseapp.com",
+            projectId: "rscua-79bbf",
+            storageBucket: "rscua-79bbf.firebasestorage.app",
+            messagingSenderId: "1022342846669",
+            appId: "1:1022342846669:web:4ab3186b738452450ef184",
+            measurementId: "G-VNZFSJ8LKQ"
         };
 
         // Inicializar Firebase
@@ -24,14 +25,14 @@
 
         // Función para iniciar sesión con Firebase (por ejemplo, email/password o Google)
         function firebaseLogin() {
-            // Ejemplo: login con email y password (puedes adaptarlo a otros proveedores)
+            // Ejemplo: login con email y password (se puede adaptar a otros proveedores)
             const email = document.getElementById("firebase-email").value;
             const password = document.getElementById("firebase-password").value;
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    // Obtén el ID token y envíalo al servidor
+                    //Obtiene el ID token y se envia al servidor
                     userCredential.user.getIdToken().then((idToken) => {
-                        // Puedes enviar el token por AJAX o incluirlo en un formulario oculto y enviarlo a un nuevo servlet
+                        // Se puede enviar el token por AJAX o incluirlo en un formulario oculto y enviarlo a un nuevo servlet
                         // Ejemplo con AJAX (usando fetch):
                         fetch("ControladorFirebaseAuth", {
                             method: "POST",
