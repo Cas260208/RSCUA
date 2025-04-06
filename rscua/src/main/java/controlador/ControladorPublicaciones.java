@@ -58,7 +58,8 @@ public class ControladorPublicaciones extends HttpServlet {
         String imagenRuta = null;
 
         if (imagenPart != null && imagenPart.getSize() > 0) {
-            GestorImagenes gestorImagenes = new GestorImagenes();
+            String basePath = request.getServletContext().getRealPath("/data/usrs");
+            GestorImagenes gestorImagenes = new GestorImagenes(basePath);
             gestorImagenes.guardarImagen(imagenPart, usuario.getUsername(), privacidad.toLowerCase(), 1080);
             imagenRuta = gestorImagenes.getUbicacion();
         }
@@ -72,7 +73,7 @@ public class ControladorPublicaciones extends HttpServlet {
         if (publicada) {
             response.sendRedirect("ControladorFeed");
         } else {
-            response.sendRedirect("vista/IU_CrearPublicaciones.jsp?error=No se pudo crear la publicación");
+            response.sendRedirect("vista/IU_CrearPublicacion.jsp?error=No se pudo crear la publicación");
         }
     }
 }

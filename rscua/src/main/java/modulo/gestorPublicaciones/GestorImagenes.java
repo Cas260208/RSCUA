@@ -13,7 +13,12 @@ public class GestorImagenes {
     private String ubicacionFinal;
 
     // Ruta absoluta al directorio de "data/usrs"
-    private static final String BASE_PATH = "C:/Users/santc/IdeaProjects/RSCUA/rscua/src/main/webapp/data/usrs";
+    //private static final String BASE_PATH = "C:/Users/santc/IdeaProjects/RSCUA/rscua/src/main/webapp/data/usrs";
+    private String basePath;
+
+    public GestorImagenes(String basePath) {
+        this.basePath = basePath;
+    }
 
     public boolean guardarImagen(Part imagenPart, String username, String privacidad, int maxAncho) throws IOException {
         // Sanear datos
@@ -25,7 +30,7 @@ public class GestorImagenes {
         }
 
         // Crear directorios si no existen (carpetas "publico", "amigos", "privado" dentro del usuario)
-        Path userBaseDir = Paths.get(BASE_PATH, username);
+        Path userBaseDir = Paths.get(basePath, username);
         crearSubcarpetasUsuario(userBaseDir);
 
         // Ruta específica según privacidad
