@@ -18,6 +18,8 @@ public class GestorImagenes {
 
     public GestorImagenes(String basePath) {
         this.basePath = basePath;
+        System.out.println("Base path set to: " + this.basePath);
+
     }
 
     public boolean guardarImagen(Part imagenPart, String username, String privacidad, int maxAncho) throws IOException {
