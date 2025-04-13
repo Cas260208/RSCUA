@@ -62,7 +62,10 @@ Accede a la aplicación desde tu navegador en `http://localhost:8080`.
 - Casandra Zetina Rodriguez  
 - Iván Garrido Velázquez  
 - Miguel Ángel Jimenez Salazar  
-- Santiago Camarena Torres  
+- Santiago Camarena Torres
+- Alan David Benitez Garcia
+- Mario Ortiz Garcia
+- Kevin Dominguez Alavez
 
 ### Enlaces Útiles
 - [Repositorio en GitHub](https://github.com/Cas260208/RSCUA/tree/main )  
