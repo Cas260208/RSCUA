@@ -23,9 +23,11 @@ public class ControladorBusqueda extends HttpServlet {
         } else if ("configuracion".equals(accion)) {
             //Redirección a IU_Configuracion.jsp
             request.getRequestDispatcher("vista/IU_Configuracion.jsp").forward(request, response);
-        } else {
+        } else if ("busqueda".equals(accion)) {
             //Acción por defecto o redirección
             response.sendRedirect("vista/IU_Busqueda.jsp");
+        } else if ("perfil".equals(accion)) {
+            response.sendRedirect("vista/IU_Perfil.jsp");
         }
     }
 

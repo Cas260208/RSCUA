@@ -1,0 +1,317 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: ${esOscuro ? '#121212' : 'white'};
+    color: ${esOscuro ? 'white' : 'black'};
+    margin: 0;
+    padding: 0;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px 0;
+    margin: 15px auto;
+    width: 100%;
+    max-width: 900px;
+    background-color: ${esOscuro ? '#1e1e1e' : '#f5f5f5'};
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: ${esOscuro ? '#444' : '#ddd'};
+    color: ${esOscuro ? 'white' : 'black'};
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* espacio entre la imagen y el texto */
+}
+
+.buttons button:hover {
+    background-color: ${esOscuro ? '#666' : '#bbb'};
+    transform: scale(1.05);
+}
+
+.buttons button img {
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
+/* Estilo para el contenedor del dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estilo para el contenido del dropdown (las opciones) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white; /* ← este es el cambio */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    z-index: 1;
+    margin-top: 10px;
+}
+
+
+/* Enlaces dentro del dropdown */
+.dropdown-content a {
+    color: ${esOscuro ? 'white' : 'black'};
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid ${esOscuro ? '#444' : '#ddd'};
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content a:hover {
+    background-color: ${esOscuro ? '#555' : '#ececec'};
+}
+
+/* Mostrar el dropdown al pasar el mouse */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 40px;
+    background-color: ${esOscuro ? '#1e1e1e' : 'white'};
+    border-bottom: 1px solid ${esOscuro ? '#333' : 'black'};
+    border-radius: 10px;
+}
+
+.barra img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: transparent;
+    padding: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.barra img:hover {
+    transform: scale(1.1);
+}
+
+.barra button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.barra .busqueda {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid ${esOscuro ? '#444' : 'black'};
+    border-radius: 15px;
+    padding: 5px 10px;
+    background-color: ${esOscuro ? '#333' : 'white'};
+    width: 600px;
+}
+
+.barra .busqueda input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    padding: 5px;
+    font-size: 16px;
+    background-color: transparent;
+    color: inherit;
+}
+
+.barra .busqueda button img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.resultados {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 900px;
+    border: 1px solid ${esOscuro ? '#444' : 'black'};
+    border-radius: 15px;
+    background-color: ${esOscuro ? '#1e1e1e' : 'white'};
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.resultados h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.perfil-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid ${esOscuro ? '#444' : '#ccc'};
+    border-radius: 10px;
+    background-color: ${esOscuro ? '#2e2e2e' : '#f9f9f9'};
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.perfil-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.perfil-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.perfil-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.perfil-info h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.perfil-info p {
+    font-size: 16px;
+    margin: 0;
+    color: ${esOscuro ? '#aaa' : '#666'};
+}
+
+.acciones {
+    display: flex;
+    gap: 10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+    background-color: white; /* ← fondo blanco forzado */
+    color: black;            /* ← texto negro forzado */
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    animation: slideDown 0.3s ease-out;
+}
+
+.cerrar {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cerrar:hover {
+    color: red;
+}
+
+.modal-content ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.modal-content li {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+/* Animaciones suaves */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+.acciones button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: ${esOscuro ? '#444' : '#ddd'};
+    color: ${esOscuro ? 'white' : 'black'};
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.acciones button:hover {
+    background-color: ${esOscuro ? '#666' : '#bbb'};
+    transform: scale(1.05);
+}
+
+.publicaciones {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.publicaciones img {
+    width: 280px;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.publicaciones img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.descripcion-post {
+    font-size: 18px;
+    margin-top: 10px;
+    color: ${esOscuro ? '#aaa' : '#333'};
+}
+

@@ -6,183 +6,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Búsqueda</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: ${esOscuro ? '#121212' : 'white'};
-            color: ${esOscuro ? 'white' : 'black'};
-            margin: 0;
-            padding: 0;
-        }
-
-        .barra {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 40px;
-            background-color: ${esOscuro ? '#1e1e1e' : 'white'};
-            border-bottom: 1px solid ${esOscuro ? '#333' : 'black'};
-            border-radius: 10px;
-        }
-
-        .barra img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: transparent;
-            padding: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease;
-        }
-
-        .barra img:hover {
-            transform: scale(1.1);
-        }
-
-        .barra button {
-            background-color: transparent;
-            border: none;
-            padding: 0;
-            display: inline-flex;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .barra .busqueda {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid ${esOscuro ? '#444' : 'black'};
-            border-radius: 15px;
-            padding: 5px 10px;
-            background-color: ${esOscuro ? '#333' : 'white'};
-            width: 600px;
-        }
-
-        .barra .busqueda input {
-            border: none;
-            outline: none;
-            flex-grow: 1;
-            padding: 5px;
-            font-size: 16px;
-            background-color: transparent;
-            color: inherit;
-        }
-
-        .barra .busqueda button img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-
-        .resultados {
-            margin: 20px auto;
-            padding: 20px;
-            max-width: 900px;
-            border: 1px solid ${esOscuro ? '#444' : 'black'};
-            border-radius: 15px;
-            background-color: ${esOscuro ? '#1e1e1e' : 'white'};
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .resultados h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .perfil-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid ${esOscuro ? '#444' : '#ccc'};
-            border-radius: 10px;
-            background-color: ${esOscuro ? '#2e2e2e' : '#f9f9f9'};
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .perfil-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .perfil-item img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
-        }
-
-        .perfil-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .perfil-info h2 {
-            font-size: 20px;
-            margin: 0;
-        }
-
-        .perfil-info p {
-            font-size: 16px;
-            margin: 0;
-            color: ${esOscuro ? '#aaa' : '#666'};
-        }
-
-        .acciones {
-            display: flex;
-            gap: 10px;
-        }
-
-        .acciones button {
-            padding: 5px 10px;
-            font-size: 14px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: ${esOscuro ? '#444' : '#ddd'};
-            color: ${esOscuro ? 'white' : 'black'};
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .acciones button:hover {
-            background-color: ${esOscuro ? '#666' : '#bbb'};
-            transform: scale(1.05);
-        }
-
-        .publicaciones {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .publicaciones img {
-            width: 280px;
-            height: 200px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .publicaciones img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .descripcion-post {
-            font-size: 18px;
-            margin-top: 10px;
-            color: ${esOscuro ? '#aaa' : '#333'};
-        }
-    </style>
+    <link rel="stylesheet" href="vista/css/BusquedaStyle.css">
 </head>
 <body>
 <div class="barra">
     <jsp:include page="header.jsp"></jsp:include>
 </div>
+
+<div class="buttons">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img src="<%= request.getContextPath() %>/vista/imagenes/filtro.png" alt="Filtro">
+            Filtro de búsqueda
+        </button>
+        <div class="dropdown-content">
+            <a href="#">📄 Publicaciones</a>
+            <a href="#">👤 Perfil</a>
+            <a href="#">🎬 VidCor</a>
+        </div>
+    </div>
+
+    <button>
+        <img src="<%= request.getContextPath() %>/vista/imagenes/historial.png" alt="Historial">
+        Historial de Búsqueda
+    </button>
+    <c:if test="${not empty historial}">
+        <div class="historial-box">
+            <h2>Historial de Búsqueda</h2>
+            <ul>
+                <c:forEach var="item" items="${historial}">
+                    <li>${item}</li>
+                </c:forEach>
+            </ul>
+        </div>
+    </c:if>
+</div>
+
 
 <div class="resultados">
     <h1>Búsquedas relacionadas con: CasZer29</h1>
@@ -203,5 +62,44 @@
         <img src="${pageContext.request.contextPath}/vista/imagenes/p2.jpg" alt="Post 2">
     </div>
 </div>
+<!-- Modal de Historial -->
+<div id="modalHistorial" class="modal">
+    <div class="modal-content">
+        <span class="cerrar">&times;</span>
+        <h2>Historial de Búsqueda</h2>
+        <ul>
+            <li>Publicaciones sobre gatos</li>
+            <li>Perfil de Ana</li>
+            <li>VidCor de cocina</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Script para mostrar y cerrar el modal -->
+<script>
+    const btnHistorial = document.querySelector("button:has(img[alt='Historial'])");
+    const modal = document.getElementById("modalHistorial");
+    const cerrar = document.querySelector(".cerrar");
+
+    if (btnHistorial && modal && cerrar) {
+        btnHistorial.addEventListener("click", (e) => {
+            e.preventDefault();
+            modal.style.display = "flex";
+        });
+
+        cerrar.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+</script>
+
 </body>
+
+
 </html>
