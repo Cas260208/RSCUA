@@ -34,6 +34,10 @@
         </button>
     </form>
 
+
+
+
+
     <div class="busqueda">
         <form action="<c:url value='/ControladorBusqueda'/>" method="post" style="display: flex; align-items: center; width: 100%;">
             <input type="text" name="query" placeholder="Ingresa palabra clave">
@@ -42,6 +46,12 @@
             </button>
         </form>
     </div>
+    <form action="<c:url value='/ControladorEventos'/>" method="post" style="display:inline;">
+        <button type="submit" name="accion" value="eventos">
+            <img src="${pageContext.request.contextPath}/vista/imagenes/eventos.png" alt="Eventos">
+        </button>
+    </form>
+
 
     <form action="<c:url value='/ControladorMensajeria'/>" method="post" style="display:inline;">
         <button type="submit" name="accion" value="chats">

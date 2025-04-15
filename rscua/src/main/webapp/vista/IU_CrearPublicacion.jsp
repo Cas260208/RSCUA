@@ -53,6 +53,8 @@
         width: 100%;
         max-width: 500px;
         margin-top: 20px;
+        position : relative;
+        z-index: 10;
     }
     .post-header {
         display: flex;

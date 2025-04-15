@@ -1,0 +1,74 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: ${esOscuro ? '#121212' : '#f9f9f9'};
+    color: ${esOscuro ? 'white' : '#333'};
+    margin: 0;
+    padding: 0;
+}
+
+.form-container {
+    background-color: ${esOscuro ? '#1e1e1e' : 'white'};
+    width: 400px;
+    margin: 60px auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin: 15px 0 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid ${esOscuro ? '#444' : '#ccc'};
+    border-radius: 8px;
+    background-color: ${esOscuro ? '#2a2a2a' : 'white'};
+    color: inherit;
+    font-size: 14px;
+}
+
+form textarea {
+    resize: vertical;
+    height: 80px;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.boton-subir {
+    padding: 10px 15px;
+    background-color: ${esOscuro ? '#333' : '#e0e0e0'};
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.boton-publicar {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.boton-publicar:hover {
+    background-color: #45a049;
+}

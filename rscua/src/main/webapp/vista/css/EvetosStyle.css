@@ -1,0 +1,71 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: ${esOscuro ? '#121212' : 'white'};
+    color: ${esOscuro ? 'white' : 'black'};
+    margin: 0;
+    padding: 0;
+}
+
+.acciones-evento {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin: 40px 0 20px;
+}
+
+.action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.action img {
+    width: 35px;
+    height: 35px;
+}
+
+.action span {
+    margin-top: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.action:hover {
+    transform: scale(1.05);
+}
+
+/* Grid de eventos */
+.contenedor-eventos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    padding: 40px 80px;
+    max-width: 1200px;
+    margin: 0 auto 60px;
+}
+
+.evento {
+    text-align: center;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.evento img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.evento p {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.evento:hover {
+    transform: scale(1.03);
+}
