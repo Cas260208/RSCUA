@@ -13,6 +13,21 @@
 <body>
 <jsp:include page="header.jsp" />
 
+<div class="botones">
+    <button>
+        <img src="${pageContext.request.contextPath}/vista/imagenes/sugerencias.png" alt="Sugerencias">
+        Sugerencias
+    </button>
+    <button>
+        <img src="${pageContext.request.contextPath}/vista/imagenes/tendencias.png" alt="Tendencias">
+        Tendencias
+    </button>
+    <button>
+        <img src="${pageContext.request.contextPath}/vista/imagenes/vidcor.png" alt="VidCor">
+        VidCor
+    </button>
+</div>
+
 <div class="Historias">
     <div class="crear-historia">
         <form action="${pageContext.request.contextPath}/vista/IU_CrearHistoria.jsp" method="get">

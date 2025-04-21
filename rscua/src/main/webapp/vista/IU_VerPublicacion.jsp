@@ -5,6 +5,12 @@
     String nombreCompleto = usuario.getNombre() + " " + usuario.getApellido();
     String username = usuario.getUsername();
 %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="vista/css/VerPublicacion.css">
+</head>
+<body>
 <div class="post-container">
     <div class="header">
         <div style="display: flex; align-items: center;">
@@ -23,7 +29,28 @@
                 </ul>
             </div>
         </div>
+
     </div>
+    <div class="modal-compartir" id="modalCompartir" style="display: none;">
+        <div class="modal-content">
+            <p class="modal-texto">¿Estás seguro de compartir esta publicación?</p>
+            <div class="modal-botones">
+                <button class="btn-no" onclick="cerrarModal()">No</button>
+                <button class="btn-si" onclick="confirmarCompartir()">Sí</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-compartir" id="modalGuardar" style="display: none;">
+        <div class="modal-content">
+            <p class="modal-texto">¿Estás seguro de guardar esta publicación?</p>
+            <div class="modal-botones">
+                <button class="btn-no" onclick="cerrarModalGuardar()">No</button>
+                <button class="btn-si" onclick="confirmarGuardar()">Sí</button>
+            </div>
+        </div>
+    </div>
+
     <div class="content">
         <p>Un estilo diferente para el día de hoy.</p>
         <div class="images">
@@ -33,103 +60,68 @@
     </div>
     <div class="footer">
         <button><img src="${pageContext.request.contextPath}/vista/imagenes/like.jpg" alt="Like"></button>
-        <button><img src="${pageContext.request.contextPath}/vista/imagenes/comentar.jpg" alt="Comment"></button>
-        <button><img src="${pageContext.request.contextPath}/vista/imagenes/compartir.jpg" alt="Share"></button>
-        <button><img src="${pageContext.request.contextPath}/vista/imagenes/guardar.jpg" alt="Save"></button>
+        <!-- Botón de comentar con función -->
+        <button onclick="mostrarComentarios(this)">
+            <img src="${pageContext.request.contextPath}/vista/imagenes/comentar.jpg" alt="Comment">
+        </button>
+        <button onclick="mostrarModalCompartir()">
+            <img src="${pageContext.request.contextPath}/vista/imagenes/compartir.jpg" alt="Compartir">
+        </button>
+        <button onclick="mostrarModalGuardar()">
+            <img src="${pageContext.request.contextPath}/vista/imagenes/guardar.jpg" alt="Guardar">
+        </button>
+    </div>
+
+    <div class="seccion-comentarios">
+        <div class="comentarios-antiguos">
+            <p><span class="coment-usuario">Carla:</span> Esta foto me encanta 😍</p>
+            <p><span class="coment-usuario">Lucas:</span> Había mucho fuego 🔥</p>
+        </div>
+
+        <div class="nuevo-comentario">
+            <textarea placeholder="Escribe un comentario..."></textarea>
+            <button class="btn-enviar" onclick="alert('Simulación: comentario enviado')">
+                <img src="${pageContext.request.contextPath}/vista/imagenes/send.png" alt="Enviar">
+            </button>
+        </div>
     </div>
 </div>
-<style>
-    .post-container {
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        background-color: #fff;
-        width: 400px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        margin: 20px auto;
+<script>
+    function mostrarComentarios(btn) {
+        const postContainer = btn.closest('.post-container');
+        const comentariosDiv = postContainer.querySelector('.seccion-comentarios');
+        comentariosDiv.style.display = (comentariosDiv.style.display === "none" || comentariosDiv.style.display === "") ? "block" : "none";
     }
-    .header {
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+
+    function mostrarModalCompartir() {
+        document.getElementById('modalCompartir').style.display = 'flex';
     }
-    .header img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 10px;
+
+    function cerrarModal() {
+        document.getElementById('modalCompartir').style.display = 'none';
     }
-    .header .username {
-        font-weight: bold;
+
+    function confirmarCompartir() {
+        alert("Publicación compartida");
+        cerrarModal();
     }
-    .options-menu {
-        position: relative;
+
+        function mostrarModalGuardar() {
+        document.getElementById('modalGuardar').style.display = 'flex';
     }
-    .options-button {
-        background: none;
-        border: none;
-        cursor: pointer;
+
+        function cerrarModalGuardar() {
+        document.getElementById('modalGuardar').style.display = 'none';
     }
-    .options-button img {
-        width: 24px;
-        height: 24px;
+
+        function confirmarGuardar() {
+        alert("Publicación guardada");
+        cerrarModalGuardar();
     }
-    .options-dropdown {
-        display: none;
-        position: absolute;
-        top: 30px;
-        right: 0;
-        background: #fff;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-    .options-dropdown ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-    .options-dropdown ul li {
-        padding: 10px;
-        cursor: pointer;
-        font-size: 12px;
-    }
-    .options-dropdown ul li:hover {
-        background: #f3f3f3;
-    }
-    .options-menu:hover .options-dropdown {
-        display: block;
-    }
-    .content {
-        padding: 10px;
-    }
-    .content p {
-        margin: 0 0 10px 0;
-    }
-    .images {
-        display: flex;
-        justify-content: space-around;
-    }
-    .images img {
-        width: 30%;
-        height: auto;
-        border-radius: 10px;
-    }
-    .footer {
-        display: flex;
-        justify-content: space-around;
-        padding: 10px;
-        border-top: 1px solid #eee;
-    }
-    .footer button {
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-    .footer img {
-        width: 32px;
-        height: 32px;
-    }
-</style>
+
+</script>
+
+
+</body>
+</html>
+

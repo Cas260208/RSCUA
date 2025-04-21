@@ -1,0 +1,233 @@
+.post-container {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px auto;
+}
+.header {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.header .username {
+    font-weight: bold;
+}
+.options-menu {
+    position: relative;
+}
+.options-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.options-button img {
+    width: 24px;
+    height: 24px;
+}
+.options-dropdown {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+.options-dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.options-dropdown ul li {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+.options-dropdown ul li:hover {
+    background: #f3f3f3;
+}
+.options-menu:hover .options-dropdown {
+    display: block;
+}
+.content {
+    padding: 10px;
+}
+.content p {
+    margin: 0 0 10px 0;
+}
+.images {
+    display: flex;
+    justify-content: space-around;
+}
+.images img {
+    width: 30%;
+    height: auto;
+    border-radius: 10px;
+}
+.footer {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border-top: 1px solid #eee;
+}
+.footer button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.footer img {
+    width: 32px;
+    height: 32px;
+}
+.seccion-comentarios {
+    display: none;
+    background-color: #fefefe;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 10px 15px 0 15px;
+    border: 1px solid #e0e0e0;
+}
+
+.comentarios-antiguos {
+    margin-bottom: 10px;
+}
+
+.coment-usuario {
+    font-weight: bold;
+    color: #333;
+}
+
+.nuevo-comentario {
+    position: relative;
+}
+
+.nuevo-comentario textarea {
+    width: 100%;
+    height: 80px;
+    border-radius: 10px;
+    padding: 10px 90px 10px 10px;
+    resize: none;
+    border: 1px solid #000;
+    font-size: 14px;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+.btn-enviar {
+    position: absolute;
+    bottom: 16px;
+    right: 10px;
+    background: white;
+    border: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.btn-enviar img {
+    width: 30px;
+    height: 30px;
+    display: block;
+}
+
+.emoji-barra {
+    font-size: 20px;
+    margin: 6px 0;
+}
+
+.modal-compartir {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    font-family: sans-serif;
+}
+
+.modal-content {
+    background: white;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    width: 250px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.modal-iconos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.icono-circulo, .icono-x, .icono-linea {
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
+.icono-x {
+    background: repeating-linear-gradient(
+            45deg, black, black 2px, transparent 2px, transparent 4px
+    );
+    transform: rotate(45deg);
+}
+
+.icono-linea {
+    width: 50px;
+    height: 8px;
+    border: none;
+    border-bottom: 3px solid black;
+    border-radius: 15px;
+}
+
+.modal-texto {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.modal-botones {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn-si, .btn-no {
+    border: 2px solid black;
+    padding: 5px 15px;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-no {
+    color: black;
+    border-color: black;
+}
+
+.btn-si {
+    color: black;
+    border-color: black;
+}
