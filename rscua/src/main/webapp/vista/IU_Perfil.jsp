@@ -25,6 +25,8 @@
     <img src="${pageContext.request.contextPath}/vista/imagenes/7772.jpg" alt="Foto de Perfil" onclick="alert('Foto de perfil seleccionada')">
     <h1><%= nombreCompleto %></h1>
     <p>@<%= username %></p>
+    <button>seguir</button>
+    <button>seguidos</button>
 </div>
 
 
