@@ -69,33 +69,8 @@
     </div>
 </div>
 
-
-<div class="publicacion">
-    <div class="publicacion-header">
-        <img src="${pageContext.request.contextPath}/vista/imagenes/7772.jpg" alt="Foto de Perfil">
-        <div>
-            <h3><%= nombreCompleto%>></h3>
-            <p style="color: gray;">@<%= username%></p>
-        </div>
-    </div>
-    <div class="publicacion-body">
-        <p>Un look diferente para el día de hoy</p>
-        <img src="${pageContext.request.contextPath}/vista/imagenes/publicacionIvan.jpg" alt="Publicación" onclick="alert('Imagen seleccionada')">
-    </div>
-    <div class="publicacion-footer">
-        <button onclick="alert('Me gusta')">
-            <img src="${pageContext.request.contextPath}/vista/imagenes/like.jpg" alt="Me gusta"> Me gusta
-        </button>
-        <button onclick="alert('Comentar')">
-            <img src="${pageContext.request.contextPath}/vista/imagenes/comentar.jpg" alt="Comentar"> Comentar
-        </button>
-        <button onclick="alert('Compartir')">
-            <img src="${pageContext.request.contextPath}/vista/imagenes/compartir.jpg" alt="Compartir"> Compartir
-        </button>
-        <button onclick="alert('Guardar')">
-            <img src="${pageContext.request.contextPath}/vista/imagenes/guardar.jpg" alt="Guardar"> Guardar
-        </button>
-    </div>
+<div class="crear_publicacion">
+    <jsp:include page="IU_VerPublicacion.jsp" />
 </div>
 </body>
 </html>
