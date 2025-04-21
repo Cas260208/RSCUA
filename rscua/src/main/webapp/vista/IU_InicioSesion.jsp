@@ -5,54 +5,15 @@
     <meta charset="UTF-8">
     <title>RSCUA</title>
     <link rel="stylesheet" href="vista/css/InicioStyle.css">
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
+    <!-- Firebase JS SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="${pageContext.request.contextPath}/js/firebase_config.js"></script>
     <script>
-        //configuración de Firebase (obtenida de la consola)
-        const firebaseConfig = {
-            apiKey: "AIzaSyAsnfDMrOsSDCxTaLXLYTVWY67zIlMtH8s",
-            authDomain: "rscua-79bbf.firebaseapp.com",
-            projectId: "rscua-79bbf",
-            storageBucket: "rscua-79bbf.firebasestorage.app",
-            messagingSenderId: "1022342846669",
-            appId: "1:1022342846669:web:4ab3186b738452450ef184",
-            measurementId: "G-VNZFSJ8LKQ"
-        };
-
-        // Inicializar Firebase
+        // Inicializa Firebase en el cliente
         firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // Función para iniciar sesión con Firebase (por ejemplo, email/password o Google)
-        function firebaseLogin() {
-            // Ejemplo: login con email y password (se puede adaptar a otros proveedores)
-            const email = document.getElementById("firebase-email").value;
-            const password = document.getElementById("firebase-password").value;
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    //Obtiene el ID token y se envia al servidor
-                    userCredential.user.getIdToken().then((idToken) => {
-                        // Se puede enviar el token por AJAX o incluirlo en un formulario oculto y enviarlo a un nuevo servlet
-                        // Ejemplo con AJAX (usando fetch):
-                        fetch("ControladorFirebaseAuth", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/x-www-form-urlencoded"
-                            },
-                            body: "idToken=" + encodeURIComponent(idToken)
-                        }).then(response => {
-                            if(response.ok){
-                                window.location.href = "ControladorFeed";
-                            }
-                        });
-                    });
-                })
-                .catch((error) => {
-                    console.error("Firebase login error: ", error);
-                    alert("Error en Firebase login: " + error.message);
-                });
-        }
     </script>
+
 </head>
 <body>
 <div class="logo">
@@ -68,11 +29,43 @@
         <input type="password" id="password" name="password" required><br>
         <button type="submit">Entrar</button><br>
     </form>
+
+    <!-- Botón de Google -->
+    <button id="googleSignInBtn">Iniciar sesión con Google</button>
+
+
+    <!-- Form oculto para enviar el ID token al servlet -->
+    <form id="googleLoginForm"
+          action="${pageContext.request.contextPath}/ControladorInicioSesion"
+          method="post" style="display:none;">
+        <input type="hidden" name="idToken" id="idTokenInput">
+    </form>
+
     <div class="separador">
     </div>
     <form action="ControladorRegistrarse" method="get">
         <button type="submit">Registrarse</button>
     </form>
+
+
 </div>
+<!-- Script de OAuth Google -->
+<script>
+    document.getElementById('googleSignInBtn').addEventListener('click', function() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider)
+            .then(result => result.user.getIdToken())
+            .then(idToken => {
+                // Inserta el token en el form oculto y lo envía
+                document.getElementById('idTokenInput').value = idToken;
+                document.getElementById('googleLoginForm').submit();
+            })
+            .catch(error => {
+                console.error('Error en OAuth Google:', error);
+                alert('No se pudo autenticar con Google: ' + error.message);
+            });
+    });
+</script>
+
 </body>
 </html>

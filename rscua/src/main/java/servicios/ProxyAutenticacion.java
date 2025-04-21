@@ -4,9 +4,12 @@ import modulo.gestorAutenticacion.Usuario;
 import modulo.gestorConfiguracion.Configuracion;
 
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
+
 
 public class ProxyAutenticacion {
     private Conexion conexion;
@@ -16,44 +19,90 @@ public class ProxyAutenticacion {
     }
 
     // Se elimina el metodo existeCorreoTelefonoOUsername y se reemplaza por el siguiente:
-    public boolean validarUsuario(String email, String phone, String username, java.sql.Date fechaNacimiento) {
+    public boolean validarUsuario(String email, String phone, String username, Date fechaNacimiento) {
         String callSP = "{CALL sp_validar_usuario(?,?,?,?)}";
         try (CallableStatement cs = conexion.getConexion().prepareCall(callSP)) {
+            // Parámetro 1: correo
             cs.setString(1, email);
-            cs.setString(2, username);
-            cs.setString(3, phone);
-            cs.setDate(4, fechaNacimiento);
+
+            // Parámetro 2: username (nullable)
+            if (username != null) {
+                cs.setString(2, username);
+            } else {
+                cs.setNull(2, Types.VARCHAR);
+            }
+
+            // Parámetro 3: phone (nullable)
+            if (phone != null) {
+                cs.setString(3, phone);
+            } else {
+                cs.setNull(3, Types.VARCHAR);
+            }
+
+            // Parámetro 4: fechaNacimiento (nullable)
+            if (fechaNacimiento != null) {
+                cs.setDate(4, fechaNacimiento);
+            } else {
+                cs.setNull(4, Types.DATE);
+            }
+
             cs.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Error en validación del usuario: " + ex.getMessage());
+            System.err.println("Error en validación del usuario: " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
     }
 
-
     public boolean registrar(Usuario nU) throws SQLException {
-        // Primero se valida el usuario; si falla, se aborta el registro.
-        if (!validarUsuario(nU.getEmail(), nU.getPhone(), nU.getUsername(), nU.getFecnac())) {
-            System.out.println("Validación fallida (edad menor de 18 o credenciales duplicadas).");
+        // 1) Validar usuario existente
+        if (!validarUsuario(
+                nU.getEmail(),
+                nU.getPhone(),
+                nU.getUsername(),
+                nU.getFecnac())) {
+            System.out.println("Validación fallida (edad menor de 18 o duplicados).");
             return false;
         }
 
-        // Se invoca el procedimiento almacenado sp_registrar_usuario
+        // 2) Llamar al SP de registro
         String callSP = "{CALL sp_registrar_usuario(?,?,?,?,?,?,?,?,?)}";
         try (CallableStatement cs = conexion.getConexion().prepareCall(callSP)) {
+            // Parámetro 1: correo
             cs.setString(1, nU.getEmail());
-            cs.setString(2, nU.getPhone());
+
+            // Parámetro 2: teléfono (nullable)
+            if (nU.getPhone() != null) {
+                cs.setString(2, nU.getPhone());
+            } else {
+                cs.setString(2, "");
+            }
+
+            // Parámetro 3: nombre de usuario
             cs.setString(3, nU.getUsername());
+
+            // Parámetros 4 y 5: nombre y apellido
             cs.setString(4, nU.getNombre());
             cs.setString(5, nU.getApellido());
-            cs.setString(6, nU.getPassword());
-            cs.setDate(7, nU.getFecnac());  // p_fechaNacimiento como java.sql.Date
-            String sexo = ((Usuario.Sexo) nU.getSexo()).name();
-            cs.setString(8, sexo);
-            cs.setString(9, null);  // Se envía null y se resuelve luego
 
+            // Parámetro 6: contraseña
+            cs.setString(6, nU.getPassword());
+
+            // Parámetro 7: fecha de nacimiento (nullable)
+            if (nU.getFecnac() != null) {
+                cs.setDate(7, nU.getFecnac());
+            } else {
+                cs.setDate(7, new Date(System.currentTimeMillis()));
+            }
+
+            // Parámetro 8: sexo ("Femenino" o "Masculino")
+            cs.setString(8, nU.getSexo().name());
+
+            // Parámetro 9: valor extra (siempre null)
+            cs.setNull(9, Types.VARCHAR);
+
+            // 3) Ejecutar y procesar resultado
             boolean hadResults = cs.execute();
             if (hadResults) {
                 try (ResultSet rs = cs.getResultSet()) {
@@ -64,8 +113,10 @@ public class ProxyAutenticacion {
                 }
             }
         }
+
         return false;
     }
+
 
 
     public boolean verificarLogin(String correo, String password) {

@@ -6,4 +6,7 @@
     <welcome-file-list>
         <welcome-file>vista/IU_InicioSesion.jsp</welcome-file>
     </welcome-file-list>
+    <listener>
+        <listener-class>servicios.firebase_initializer</listener-class>
+    </listener>
 </web-app>

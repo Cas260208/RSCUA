@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# No commitear credenciales de Firebase
+/src/main/webapp/WEB-INF/serviceAccountKey.json

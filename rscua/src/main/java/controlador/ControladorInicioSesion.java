@@ -1,62 +1,116 @@
 package controlador;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import modulo.gestorAutenticacion.GestorAutenticacion;
 import modulo.gestorAutenticacion.Usuario;
 import modulo.gestorConfiguracion.Configuracion;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet("/ControladorInicioSesion")
 public class ControladorInicioSesion extends HttpServlet {
+
     private GestorAutenticacion gestorAutenticacion = new GestorAutenticacion();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("vista/IU_InicioSesion.jsp").forward(request, response);
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("vista/IU_InicioSesion.jsp")
+                .forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String correo = request.getParameter("email");
+
+        HttpSession session = request.getSession();
+        String idToken = request.getParameter("idToken");
+
+        // 1) Login con Google (Firebase Admin verifica el token)
+        if (idToken != null && !idToken.isEmpty()) {
+            try {
+                FirebaseToken decodedToken = FirebaseAuth.getInstance()
+                        .verifyIdToken(idToken);
+                String email = decodedToken.getEmail();
+
+                // 1.1) Intenta cargar al usuario de tu BD
+                Usuario usuario = gestorAutenticacion.getUsuario(email);
+
+                // 1.2) Si no existe, lo registras automáticamente
+                if (usuario == null) {
+                    boolean creado = gestorAutenticacion.registrarDesdeGoogle(decodedToken);
+                    if (!creado) {
+                        request.setAttribute("mensaje", "Error al crear usuario desde Google.");
+                        request.getRequestDispatcher("vista/IU_InicioSesion.jsp")
+                                .forward(request, response);
+                        return;
+                    }
+                    // Vuelve a cargar al usuario recién registrado
+                    usuario = gestorAutenticacion.getUsuario(email);
+                    if (usuario == null) {
+                        request.setAttribute("mensaje", "No se pudo recuperar usuario tras registro.");
+                        request.getRequestDispatcher("vista/IU_InicioSesion.jsp")
+                                .forward(request, response);
+                        return;
+                    }
+                }
+
+                // 1.3) Ya tienes usuario (existente o recién creado), cargas su configuración
+                Configuracion cfg = gestorAutenticacion.getConfiguracion(usuario.getId());
+                session.setAttribute("usuario", usuario);
+                session.setAttribute("configuracion", cfg);
+
+                request.setAttribute("mensaje", "Inicio con Google exitoso");
+                request.getRequestDispatcher("vista/IU_Feed.jsp")
+                        .forward(request, response);
+                return;
+
+            } catch (FirebaseAuthException e) {
+                e.printStackTrace();
+                request.setAttribute("mensaje", "Error validando token de Google.");
+                request.getRequestDispatcher("vista/IU_InicioSesion.jsp")
+                        .forward(request, response);
+                return;
+            }
+        }
+
+        // 2) Login tradicional con email/password
+        String correo   = request.getParameter("email");
         String password = request.getParameter("password");
 
         Usuario usuario = new Usuario(correo, password);
-        GestorAutenticacion ga = new GestorAutenticacion();
+        boolean autenticado = gestorAutenticacion.IniciarSesion(usuario);
 
-        if (ga.IniciarSesion(usuario)) {
-            HttpSession session = request.getSession();
-            //session.setMaxInactiveInterval(180);
-
+        if (autenticado) {
             System.out.println("\n✅ Éxito al iniciar sesión");
 
-            usuario = ga.getUsuario(correo);
+            usuario = gestorAutenticacion.getUsuario(correo);
             if (usuario == null) {
                 System.out.println("⚠️ No se encontró el usuario en la BD");
                 request.setAttribute("mensaje", "Error al recuperar usuario.");
-                request.getRequestDispatcher("vista/IU_Registrarse.jsp").forward(request, response);
+                request.getRequestDispatcher("vista/IU_Registrarse.jsp")
+                        .forward(request, response);
                 return;
             }
 
-            //Configuracion configuracion = ga.getConfiguracion(correo);
-            Configuracion configuracion = ga.getConfiguracion(usuario.getId());
-
-
+            Configuracion configuracion = gestorAutenticacion.getConfiguracion(usuario.getId());
             session.setAttribute("usuario", usuario);
             session.setAttribute("configuracion", configuracion);
 
             request.setAttribute("mensaje", "Inicio de sesión exitoso");
-            request.getRequestDispatcher("vista/IU_Feed.jsp").forward(request, response);
+            request.getRequestDispatcher("vista/IU_Feed.jsp")
+                    .forward(request, response);
+
         } else {
             System.out.println("\n❌ Error al iniciar sesión");
             request.setAttribute("mensaje", "Credenciales incorrectas.");
-            request.getRequestDispatcher("vista/IU_Registrarse.jsp").forward(request, response);
+            request.getRequestDispatcher("vista/IU_Registrarse.jsp")
+                    .forward(request, response);
         }
     }
 }
-
