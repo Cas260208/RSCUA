@@ -5,54 +5,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Eventos</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/vista/css/estiloEventos.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/vista/css/EvetosStyle.css">
 </head>
 <body>
 
 <jsp:include page="header.jsp" />
 
-<!-- Acciones arriba de eventos -->
-<div class="acciones-evento">
-  <div class="action">
+<!-- Botones principales -->
+<div class="botones-eventos">
+  <a href="${pageContext.request.contextPath}/vista/IU_CrearEvento.jsp" class="boton-evento">
+    <img src="${pageContext.request.contextPath}/vista/imagenes/Crearevento.jpg" alt="Crear Evento">
+    <span>Crear Evento</span>
+  </a>
+  <a href="${pageContext.request.contextPath}/vista/IU_EventosCercanos.jsp" class="boton-evento">
+    <img src="${pageContext.request.contextPath}/vista/imagenes/ubicacion.jpg" alt="Eventos cercanos">
     <span>Eventos cercanos</span>
-    <a href="https://www.google.com" target="_blank">
-      <img src="${pageContext.request.contextPath}/vista/imagenes/ubicacion.jpg" alt="Ubicación">
-    </a>
-  </div>
-  <div class="action">
-    <span>Buscar por fecha</span>
-    <a href="https://www.google.com" target="_blank">
-      <img src="${pageContext.request.contextPath}/vista/img/calendario2.webp" alt="Calendario">
-    </a>
-  </div>
-</div>
+  </a>
 
-<!-- Cuadrícula de eventos -->
-<div class="contenedor-eventos">
-  <div class="evento">
-    <p>Musicales</p>
-    <a href="https://www.google.com" target="_blank">
-      <img src="${pageContext.request.contextPath}/vista/img/musica.jpg" alt="Musicales">
-    </a>
-  </div>
-  <div class="evento">
-    <p>Deportivos</p>
-    <a href="https://www.google.com" target="_blank">
-      <img src="${pageContext.request.contextPath}/vista/img/dep.jpg" alt="Deportivos">
-    </a>
-  </div>
-  <div class="evento">
-    <p>Culturales</p>
-    <a href="https://www.google.com" target="_blank">
-      <img src="${pageContext.request.contextPath}/vista/imagenes/cultural.jpg" alt="Culturales">
-    </a>
-  </div>
-  <div class="evento">
-    <p>Entretenimiento</p>
-    <a href="https://www.google.com" target="_blank">
-      <img src="${pageContext.request.contextPath}/vista/img/entretenimiento.jpg" alt="Entretenimiento">
-    </a>
-  </div>
+  <a href="${pageContext.request.contextPath}/vista/IU_BuscarporFecha.jsp" class="boton-evento">
+    <img src="${pageContext.request.contextPath}/vista/imagenes/calendariodib.jpg" alt="Buscar por fecha">
+    <span>Buscar por fecha</span>
+  </a>
+
 </div>
 
 </body>

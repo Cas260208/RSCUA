@@ -4,7 +4,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mensajeria</title>
+    <title>Mensajería</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -142,56 +142,54 @@
 <div class="barra">
     <jsp:include page="header.jsp"></jsp:include>
 </div>
+
 <div class="comunidades">
     <h1>Mensajes Entrantes</h1>
 
     <div class="comunidad-item">
         <div class="comunidad-info">
             <h2>Tia Milagros</h2>
-            <p>Bendiciones a ti y a tu mama.</p>
+            <p>Bendiciones a ti y a tu mamá.</p>
         </div>
         <div class="acciones">
-            <button class="unirse">Ir al chat</button>
-            <button class="Reportar">Marcar como Leido</button>
+            <button class="unirse" onclick="window.location.href='${pageContext.request.contextPath}/vista/IU_InterfaceChat.jsp'">Ir al chat</button>
+            <button class="Reportar">Marcar como Leído</button>
         </div>
     </div>
+
     <div class="comunidad-item">
         <div class="comunidad-info">
             <h2>El guero</h2>
             <p>Ya traje el queso</p>
         </div>
         <div class="acciones">
-            <button class="unirse">Ir al chat</button>
-            <button class="Reportar">Marcar como Leido</button>
+            <button class="unirse" onclick="window.location.href='${pageContext.request.contextPath}/vista/IU_InterfaceChat.jsp'">Ir al chat</button>
+            <button class="Reportar">Marcar como Leído</button>
         </div>
     </div>
+
     <div class="comunidad-item">
         <div class="comunidad-info">
             <h2>Juan Mecanico</h2>
             <p>Hola 🥺</p>
         </div>
         <div class="acciones">
-            <form action="ControladorChats" method="post">
-                <button class="unirse" type="submit" value="accion">Ir al chat</button>
-            </form>
-            <button class="Reportar">Marcar como Leido</button>
+            <button class="unirse" onclick="window.location.href='${pageContext.request.contextPath}/vista/IU_InterfaceChat.jsp'">Ir al chat</button>
+            <button class="Reportar">Marcar como Leído</button>
         </div>
     </div>
+
     <div class="comunidad-item">
         <div class="comunidad-info">
             <h2>Yo</h2>
             <p>Se envió una foto</p>
         </div>
         <div class="acciones">
-            <form action="ControladorChats" method="post">
-                <button class="unirse" type="submit" value="accion">Ir al chat</button>
-            </form>
-            <button class="Reportar">Marcar como Leido</button>
+            <button class="unirse" onclick="window.location.href='${pageContext.request.contextPath}/vista/IU_InterfaceChat.jsp'">Ir al chat</button>
+            <button class="Reportar">Marcar como Leído</button>
         </div>
     </div>
-    </div>
+</div>
 
-<script>
-</script>
 </body>
 </html>

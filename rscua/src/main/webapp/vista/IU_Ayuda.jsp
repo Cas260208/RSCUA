@@ -75,7 +75,7 @@
 
         .ayuda-container {
             margin: 20px auto;
-            max-width: 900px;
+            max-width: 1000px;
             padding: 20px;
             border-radius: 15px;
             background-color: ${esOscuro ? '#1e1e1e' : 'white'};
@@ -99,7 +99,8 @@
         }
 
         .ayuda-seccion {
-            width: 250px;
+            width: 210px;
+            min-width: 180px;
             padding: 15px;
             border-radius: 10px;
             background-color: ${esOscuro ? '#2e2e2e' : '#f9f9f9'};
@@ -138,18 +139,27 @@
 
 <div class="ayuda-container">
     <div class="ayuda-titulo">Asistencia y Ayuda</div>
+
     <div class="ayuda-secciones">
         <div class="ayuda-seccion" onclick="alert('Preguntas Generales seleccionadas')">
             <img src="${pageContext.request.contextPath}/vista/imagenes/informacion.jpg" alt="Preguntas">
             <p>Preguntas Generales</p>
         </div>
+
         <div class="ayuda-seccion" onclick="alert('Seguimiento de Reportes seleccionado')">
             <img src="${pageContext.request.contextPath}/vista/imagenes/reportes.png" alt="Reportes">
             <p>Seguimiento de Reportes</p>
         </div>
+
         <div class="ayuda-seccion" onclick="alert('Chat de Asistencia seleccionado')">
             <img src="${pageContext.request.contextPath}/vista/imagenes/chatasis.png" alt="Chat">
             <p>Chat de Asistencia</p>
+        </div>
+
+        <!-- NUEVO BOTÓN: TUTORIALES -->
+        <div class="ayuda-seccion" onclick="window.location.href='${pageContext.request.contextPath}/vista/IU_Tutoriales.jsp'">
+            <img src="${pageContext.request.contextPath}/vista/imagenes/ayuda.jpg" alt="Tutoriales">
+            <p>Tutoriales</p>
         </div>
     </div>
 
@@ -158,6 +168,6 @@
         <p>Esta red social fue creada como parte del proyecto de la uea "Desarrollo a Gran Escala" impartida por el Profesor Pedro Pablo González Pérez.</p>
     </div>
 </div>
+
 </body>
 </html>
-

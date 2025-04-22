@@ -50,10 +50,16 @@
     </div>
 </div>
 
+
+
+
+
+
 <div class="historias-container">
-    <div class="crear-historia" onclick="alert('Subir nueva historia')">
+    <div class="crear-historia" onclick="window.location.href='http://localhost:8080/rscua_war/vista/IU_CrearHistoria.jsp'">
         <p>+ Crear Historia</p>
     </div>
+
     <div class="historia" onclick="alert('Historia seleccionada')">
         <img src="${pageContext.request.contextPath}/vista/imagenes/Historia-1.jpeg" alt="Historia 1">
     </div>

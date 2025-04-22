@@ -48,7 +48,7 @@
     </div>
     <form action="<c:url value='/ControladorEventos'/>" method="post" style="display:inline;">
         <button type="submit" name="accion" value="eventos">
-            <img src="${pageContext.request.contextPath}/vista/imagenes/eventos.png" alt="Eventos">
+            <img src="${pageContext.request.contextPath}/vista/imagenes/IconoEvento.png" alt="Eventos">
         </button>
     </form>
 
