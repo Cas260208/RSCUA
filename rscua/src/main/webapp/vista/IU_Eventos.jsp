@@ -22,7 +22,7 @@
   <div class="action">
     <span>Buscar por fecha</span>
     <a href="https://www.google.com" target="_blank">
-      <img src="${pageContext.request.contextPath}/vista/img/calendario2.webp" alt="Calendario">
+      <img src="${pageContext.request.contextPath}/vista/imagenes/calendario2.webp" alt="Calendario">
     </a>
   </div>
 </div>
@@ -32,13 +32,13 @@
   <div class="evento">
     <p>Musicales</p>
     <a href="https://www.google.com" target="_blank">
-      <img src="${pageContext.request.contextPath}/vista/img/musica.jpg" alt="Musicales">
+      <img src="${pageContext.request.contextPath}/vista/imagenes/musicaEventos.jpg" alt="Musicales">
     </a>
   </div>
   <div class="evento">
     <p>Deportivos</p>
     <a href="https://www.google.com" target="_blank">
-      <img src="${pageContext.request.contextPath}/vista/img/dep.jpg" alt="Deportivos">
+      <img src="${pageContext.request.contextPath}/vista/imagenes/dep.jpg" alt="Deportivos">
     </a>
   </div>
   <div class="evento">
@@ -50,7 +50,7 @@
   <div class="evento">
     <p>Entretenimiento</p>
     <a href="https://www.google.com" target="_blank">
-      <img src="${pageContext.request.contextPath}/vista/img/entretenimiento.jpg" alt="Entretenimiento">
+      <img src="${pageContext.request.contextPath}/vista/imagenes/entretenimiento.jpg" alt="Entretenimiento">
     </a>
   </div>
 </div>
