@@ -8,7 +8,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.io.InputStream;
 
-
+//Arranca el SDK de firebase
 public class firebase_initializer  implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {

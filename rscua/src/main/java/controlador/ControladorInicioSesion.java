@@ -3,6 +3,8 @@ package controlador;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import modulo.gestorAutenticacion.firebase.LoginFirebase;
+import modulo.gestorAutenticacion.firebase.AdapterFirebaseGmail;
 import modulo.gestorAutenticacion.GestorAutenticacion;
 import modulo.gestorAutenticacion.Usuario;
 import modulo.gestorConfiguracion.Configuracion;
@@ -34,14 +36,16 @@ public class ControladorInicioSesion extends HttpServlet {
         // 1) Login con Google (Firebase Admin verifica el token)
         if (idToken != null && !idToken.isEmpty()) {
             try {
-                FirebaseToken decodedToken = FirebaseAuth.getInstance()
-                        .verifyIdToken(idToken);
+                //PATRÓN ADAPTER
+                LoginFirebase loginFirebase = new AdapterFirebaseGmail();
+                FirebaseToken decodedToken = loginFirebase.authenticate(idToken);
+
                 String email = decodedToken.getEmail();
 
-                // 1.1) Intenta cargar al usuario de tu BD
+                // 1.1) Intenta cargar al usuario de la BD
                 Usuario usuario = gestorAutenticacion.getUsuario(email);
 
-                // 1.2) Si no existe, lo registras automáticamente
+                // 1.2) Si no existe, se registra automáticamente
                 if (usuario == null) {
                     boolean creado = gestorAutenticacion.registrarDesdeGoogle(decodedToken);
                     if (!creado) {
@@ -60,7 +64,7 @@ public class ControladorInicioSesion extends HttpServlet {
                     }
                 }
 
-                // 1.3) Ya tienes usuario (existente o recién creado), cargas su configuración
+                // 1.3) Ya tiene usuario (existente o recién creado), carga su configuración
                 Configuracion cfg = gestorAutenticacion.getConfiguracion(usuario.getId());
                 session.setAttribute("usuario", usuario);
                 session.setAttribute("configuracion", cfg);
