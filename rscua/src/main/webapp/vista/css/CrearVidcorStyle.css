@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.editor-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.editor-container h1 {
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+
+.video-preview {
+    background-color: #000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.video-preview video {
+    width: 100%;
+    max-height: 500px;
+    border-radius: 10px;
+}
+
+/* Texto encima del video */
+.video-text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 2;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8);
+    white-space: pre-wrap;
+    text-align: center;
+    padding: 10px;
+}
+
+.toolset {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.toolset h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.control-group {
+    margin-bottom: 20px;
+}
+
+.control-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.control-group input[type="text"],
+.control-group input[type="file"],
+.control-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+.botones-accion {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.botones-accion .btn {
+    padding: 10px 20px;
+    margin: 0 10px 15px 10px;
+    background-color: #111;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.botones-accion .btn:hover {
+    background-color: #444;
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}

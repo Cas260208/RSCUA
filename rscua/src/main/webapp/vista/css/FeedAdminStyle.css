@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.admin-container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.admin-container h1 {
+    font-size: 2em;
+    color: #111;
+    margin-bottom: 30px;
+}
+
+.admin-section {
+    border-top: 1px solid #ddd;
+    padding-top: 25px;
+    margin-top: 25px;
+}
+
+.admin-section h2 {
+    font-size: 1.4em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Contenedor de acciones centrado horizontalmente */
+.admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Botones con estilo */
+.admin-actions button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #111;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.admin-actions button:hover {
+    background-color: #444;
+    transform: scale(1.05);
+}
+
+/* Input alineado con los botones */
+.admin-actions input[type="text"] {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 250px;
+}
+
+@media screen and (max-width: 768px) {
+    .admin-container {
+        padding: 10px;
+    }
+
+    .admin-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-actions button,
+    .admin-actions input {
+        width: 90%;
+        margin-bottom: 10px;
+    }
+}

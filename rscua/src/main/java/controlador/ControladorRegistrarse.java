@@ -5,31 +5,36 @@ import modulo.gestorAutenticacion.Usuario;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.Date;
 
 @WebServlet("/ControladorRegistrarse")
 public class ControladorRegistrarse extends HttpServlet {
+
     private GestorAutenticacion gestorAutenticacion = new GestorAutenticacion();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.getRequestDispatcher("vista/IU_Registrarse.jsp").forward(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        // Capturar los parámetros del formulario
         String nombre = request.getParameter("name");
         String apellido = request.getParameter("lastname");
-        String fn = request.getParameter("fn");   // HTML5 hace "yyyy-MM-dd"
+        String fn = request.getParameter("fn"); // Formato: yyyy-MM-dd
         String sexo = request.getParameter("sex");
         String username = request.getParameter("username");
         String telefono = request.getParameter("phone");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        // Validar y convertir fecha
         Date fecnac;
         try {
             fecnac = Date.valueOf(fn);
@@ -40,16 +45,19 @@ public class ControladorRegistrarse extends HttpServlet {
             return;
         }
 
-        Usuario nuevoUsuario = new Usuario(nombre,apellido,username,telefono,email,password,fecnac,sexo);
-        GestorAutenticacion ga = new GestorAutenticacion();
+        // Crear nuevo usuario
+        Usuario nuevoUsuario = new Usuario(nombre, apellido, username, telefono, email, password, fecnac, sexo);
 
-        if(ga.Registrar(nuevoUsuario)){
-            System.out.println("Exito al registrar usuario : "+ username);
-            request.setAttribute("mensaje", "Usuario registrado");
-            request.getRequestDispatcher("vista/IU_InicioSesion.jsp").forward(request, response);
+        // Registrar usuario
+        boolean registrado = gestorAutenticacion.Registrar(nuevoUsuario);
+
+        if (registrado) {
+            System.out.println("✅ Usuario registrado correctamente: " + username);
+            request.setAttribute("mensaje", "Usuario Creado Exitosamente");
+            request.getRequestDispatcher("vista/IU_Registrarse.jsp").forward(request, response);
         } else {
-            System.out.println("Error al registrar usuario, checar unicidad de credenciales");
-            request.setAttribute("mensaje", "Usuario no registrado");
+            System.out.println("❌ Fallo al registrar usuario: correo o usuario duplicado.");
+            request.setAttribute("error", "Usuario no registrado, revisa tus datos.");
             request.getRequestDispatcher("vista/IU_Registrarse.jsp").forward(request, response);
         }
     }

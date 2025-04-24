@@ -86,6 +86,19 @@ public class ControladorInicioSesion extends HttpServlet {
         // 2) Login tradicional con email/password
         String correo   = request.getParameter("email");
         String password = request.getParameter("password");
+        if (correo.equals("moderadorRSCUA@gmail.com") && password.equals("moderadorRSCUA1")) {
+            Usuario moderador = new Usuario(correo, password);
+            session.setAttribute("usuario", moderador);
+            response.sendRedirect("vista/IU_FeedModerador.jsp");
+            return;
+        }
+
+        if (correo.equals("administradorRSCUA@gmail.com") && password.equals("administradorRSCUA1")) {
+            Usuario admin = new Usuario(correo, password);
+            session.setAttribute("usuario", admin);
+            response.sendRedirect("vista/IU_FeedAdministrador.jsp");
+            return;
+        }
 
         Usuario usuario = new Usuario(correo, password);
         boolean autenticado = gestorAutenticacion.IniciarSesion(usuario);
