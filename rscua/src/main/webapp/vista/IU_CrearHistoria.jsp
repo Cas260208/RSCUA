@@ -16,33 +16,49 @@
 
   <form action="#" method="post" enctype="multipart/form-data">
 
-    <label for="etiquetas">Etiquetar usuarios</label>
-    <input type="text" id="etiquetas" name="etiquetas" placeholder="@usuario1, @usuario2">
-
-    <label for="ubicacion">Ubicación</label>
-    <input type="text" id="ubicacion" name="ubicacion" placeholder="Ciudad, país...">
-
-    <label for="visibilidad">Visibilidad</label>
-    <select id="visibilidad" name="visibilidad">
-      <option>Público</option>
-      <option>Amigos</option>
-      <option>Privado</option>
-    </select>
-
     <label for="descripcion">Descripción (opcional)</label>
     <textarea id="descripcion" name="descripcion" placeholder="¿Qué deseas compartir hoy?"></textarea>
 
-    <div class="botones">
-      <label class="boton-subir">
-        <input type="file" name="archivo" hidden>
-        📷 Subir imagen o video
-      </label>
+    <label for="imagen">Subir Imagen (JPG, JPEG o PNG):</label>
+    <input type="file" name="imagen" id="imagen" accept="image/jpeg, image/jpg, image/png">
 
-      <button type="submit" class="boton-publicar">Publicar historia</button>
+    <div id="preview-container" style="margin-top:10px; display: none;">
+      <p>Vista previa:</p>
+      <img id="preview" src="" alt="Vista previa de imagen" style="max-width: 100%; border-radius: 8px;">
     </div>
 
+    <div class="botones">
+      <button type="submit" class="boton-publicar">Publicar historia</button>
+    </div>
   </form>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const imagenInput = document.getElementById('imagen');
+    const previewContainer = document.getElementById('preview-container');
+    const preview = document.getElementById('preview');
+
+    imagenInput.addEventListener('change', function () {
+      const file = imagenInput.files[0];
+      if (file) {
+        const allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
+        if (allowedExtensions.includes(file.type)) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            preview.src = e.target.result;
+            previewContainer.style.display = 'block';
+          }
+          reader.readAsDataURL(file);
+        } else {
+          previewContainer.style.display = 'none';
+          preview.src = "";
+          alert('Solo se permiten imágenes JPG, JPEG o PNG.');
+        }
+      }
+    });
+  });
+</script>
 
 </body>
 </html>

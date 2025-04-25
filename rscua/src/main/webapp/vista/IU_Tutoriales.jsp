@@ -13,10 +13,14 @@
 <div class="contenedor-tutoriales">
     <h1>Tutoriales Recomendados</h1>
 
+    <!-- Tutorial 1 -->
     <div class="tarjeta-tutorial">
-        <img class="imagen-ampliable" src="${pageContext.request.contextPath}/vista/img/Tutoriales.png" alt="Tutorial 1">
+        <h2>Cómo editar tu perfil</h2>
+        <div class="imagenes-tutorial">
+            <img class="imagen-tutorial" src="${pageContext.request.contextPath}/vista/imagenes/crearunahistoria.png" alt="Paso 1">
+            <img class="imagen-tutorial" src="${pageContext.request.contextPath}/vista/imagenes/tutorialesoriginal.png" alt="Paso 2">
+        </div>
         <div class="contenido">
-            <h2>Cómo editar tu perfil</h2>
             <p>Autor: Admin</p>
             <div class="acciones">
                 <button>Ver</button>
@@ -26,10 +30,15 @@
         </div>
     </div>
 
+    <!-- Tutorial 2 -->
     <div class="tarjeta-tutorial">
-        <img class="imagen-ampliable" src="${pageContext.request.contextPath}/vista/imagenes/tutorial2.jpg" alt="Tutorial 2">
+        <h2>Cómo subir una historia</h2>
+        <div class="imagenes-tutorial">
+            <img class="imagen-tutorial" src="${pageContext.request.contextPath}/vista/imagenes/subirunaHistoriatuto.png" alt="Paso 1">
+            <img class="imagen-tutorial" src="${pageContext.request.contextPath}/vista/imagenes/Cargaunahistoria20.png" alt="Paso 2">
+            <img class="imagen-tutorial" src="${pageContext.request.contextPath}/vista/imagenes/terceraparte.png" alt="Paso 3">
+        </div>
         <div class="contenido">
-            <h2>Cómo subir una historia</h2>
             <p>Autor: Moderador</p>
             <div class="acciones">
                 <button>Ver</button>
@@ -47,23 +56,45 @@
 </div>
 
 <script>
-    document.querySelectorAll('.imagen-ampliable').forEach(imagen => {
-        imagen.addEventListener('click', function () {
-            const modal = document.getElementById("modal-img");
-            const imgModal = document.getElementById("imagen-ampliada");
-            modal.style.display = "block";
-            imgModal.src = this.src;
+    const imagenes = document.querySelectorAll('.imagen-tutorial');
+    const modal = document.getElementById('modal-img');
+    const modalImg = document.getElementById('imagen-ampliada');
+    const cerrar = document.querySelector('.cerrar');
+    let currentIndex = 0;
+
+    // Abrir modal con la imagen clickeada
+    imagenes.forEach((img, index) => {
+        img.addEventListener('click', () => {
+            currentIndex = index;
+            modal.classList.add('open');
+            modalImg.src = img.src;
         });
     });
 
-    document.querySelector(".cerrar").addEventListener('click', function () {
-        document.getElementById("modal-img").style.display = "none";
+    // Cerrar modal al hacer clic en la X
+    cerrar.addEventListener('click', () => {
+        modal.classList.remove('open');
     });
 
-    window.addEventListener('click', function (e) {
-        const modal = document.getElementById("modal-img");
+    // Cerrar modal al hacer clic fuera de la imagen
+    modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-            modal.style.display = "none";
+            modal.classList.remove('open');
+        }
+    });
+
+    // Cambiar imagen con flechas del teclado
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('open')) return;
+
+        if (e.key === 'ArrowRight') {
+            currentIndex = (currentIndex + 1) % imagenes.length;
+            modalImg.src = imagenes[currentIndex].src;
+        } else if (e.key === 'ArrowLeft') {
+            currentIndex = (currentIndex - 1 + imagenes.length) % imagenes.length;
+            modalImg.src = imagenes[currentIndex].src;
+        } else if (e.key === 'Escape') {
+            modal.classList.remove('open');
         }
     });
 </script>
