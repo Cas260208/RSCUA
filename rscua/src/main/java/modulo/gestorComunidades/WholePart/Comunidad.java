@@ -1,15 +1,10 @@
-package modulo.gestorComunidades;
-import servicios.Builder.*;
+package modulo.gestorComunidades.WholePart;
 
-public class SolicitudComunidad {
+public class Comunidad {
     private String nombre;
     private String descripcion;
     private int miembros;
     private boolean registrado;
-
-    public SolicitudComunidad() {
-
-    }
 
     public String getNombre() {
         return nombre;
@@ -42,5 +37,4 @@ public class SolicitudComunidad {
     public void setRegistrado(boolean registrado) {
         this.registrado = registrado;
     }
-
 }

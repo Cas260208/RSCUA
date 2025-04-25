@@ -7,6 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modulo.gestorComunidades.SolicitudComunidad;
+import modulo.gestorComunidades.WholePart.*;
+import servicios.Builder.*;
 
 @WebServlet(name = "ControladorComunidades", urlPatterns = {"/ControladorComunidades"})
 public class ControladorComunidades extends HttpServlet {
