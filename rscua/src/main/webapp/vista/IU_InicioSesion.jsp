@@ -30,7 +30,7 @@
 
     <!-- Botón de Google -->
     <button id="googleSignInBtn" class="google-btn">
-        <img src="${pageContext.request.contextPath}/vista/imagenes/logo google.png" alt="Google">
+        <img src="${pageContext.request.contextPath}/vista/imagenes/logo_google.png" alt="Google">
     </button>
 
     <form id="googleLoginForm"
