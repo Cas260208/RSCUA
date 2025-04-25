@@ -1,10 +1,9 @@
 package controlador;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import modulo.gestorAutenticacion.firebase.LoginFirebase;
-import modulo.gestorAutenticacion.firebase.AdapterFirebaseGmail;
+import servicios.adapter.LoginFirebase;
+import servicios.adapter.LoginFirebaseFactory;
 import modulo.gestorAutenticacion.GestorAutenticacion;
 import modulo.gestorAutenticacion.Usuario;
 import modulo.gestorConfiguracion.Configuracion;
@@ -32,12 +31,16 @@ public class ControladorInicioSesion extends HttpServlet {
 
         HttpSession session = request.getSession();
         String idToken = request.getParameter("idToken");
+        String provider = request.getParameter("provider");
+        if (provider == null) provider = "gmail";
 
         // 1) Login con Google (Firebase Admin verifica el token)
         if (idToken != null && !idToken.isEmpty()) {
             try {
                 //PATRÓN ADAPTER
-                LoginFirebase loginFirebase = new AdapterFirebaseGmail();
+                //Se obtiene el adapter adecuado
+                LoginFirebase loginFirebase = LoginFirebaseFactory.getAdapter(provider);
+                //Se autentica y recibe el token decodificado
                 FirebaseToken decodedToken = loginFirebase.authenticate(idToken);
 
                 String email = decodedToken.getEmail();
@@ -76,7 +79,7 @@ public class ControladorInicioSesion extends HttpServlet {
 
             } catch (FirebaseAuthException e) {
                 e.printStackTrace();
-                request.setAttribute("mensaje", "Error validando token de Google.");
+                request.setAttribute("mensaje", "Error validando token de " + provider);
                 request.getRequestDispatcher("vista/IU_InicioSesion.jsp")
                         .forward(request, response);
                 return;

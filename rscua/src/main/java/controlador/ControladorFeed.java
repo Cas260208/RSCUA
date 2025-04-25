@@ -22,7 +22,7 @@ public class ControladorFeed extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        // Inicializamos nuestro punto de entrada al patrón Master–Slave
+        // Se inicializa el punto de entrada al patrón Master–Slave
         authSvc = new Autenticacion();
     }
 
