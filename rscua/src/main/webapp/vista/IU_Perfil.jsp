@@ -12,7 +12,7 @@
 <body>
 
 <div class="barra">
-    <jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="header.jsp" />
 </div>
 
 <%
@@ -46,37 +46,28 @@
     </div>
     <div onclick="alert('Elementos guardados')">
         <img src="${pageContext.request.contextPath}/vista/imagenes/guardar.jpg" alt="Guardar">
-
     </div>
 </div>
 
-
-
-
-
-
 <div class="historias-container">
-    <div class="crear-historia" onclick="window.location.href='http://localhost:8080/rscua_war/vista/IU_CrearHistoria.jsp'">
+    <div class="crear-historia" onclick="window.location.href='${pageContext.request.contextPath}/vista/IU_CrearHistoria.jsp'">
         <p>+ Crear Historia</p>
     </div>
 
-    <div class="historia" onclick="alert('Historia seleccionada')">
-        <img src="${pageContext.request.contextPath}/vista/imagenes/Historia-1.jpeg" alt="Historia 1">
-    </div>
-    <div class="historia" onclick="alert('Historia seleccionada')">
-        <img src="${pageContext.request.contextPath}/vista/imagenes/Historia-2.jpeg" alt="Historia 2">
-    </div>
-    <div class="historia" onclick="alert('Historia seleccionada')">
-        <img src="${pageContext.request.contextPath}/vista/imagenes/Historia-3.jpeg" alt="Historia 3">
-    </div>
-    <div class="historia" onclick="alert('Historia seleccionada')">
-        <img src="${pageContext.request.contextPath}/vista/imagenes/Historia-4.jpeg" alt="Historia 4">
-    </div>
+    <!-- Mostrar las 8 imágenes perfil_1 a perfil_8 como links -->
+    <c:forEach var="i" begin="0" end="7">
+        <div class="historia">
+            <a href="${pageContext.request.contextPath}/vista/IU_HistoriasPerfil.jsp?index=${i}">
+                <img src="${pageContext.request.contextPath}/vista/imagenes/perfil_${i+1}.jpg" alt="Perfil ${i+1}">
+            </a>
+        </div>
+    </c:forEach>
 </div>
 
 <div class="crear_publicacion">
     <jsp:include page="IU_VerPublicacion.jsp" />
 </div>
+
 </body>
 </html>
 

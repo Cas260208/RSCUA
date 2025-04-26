@@ -15,7 +15,6 @@
 <body>
 <div class="logo">
     <img src="${pageContext.request.contextPath}/vista/imagenes/log_RSCUA.png" alt="Imagen de inicio">
-    <div class="glitch"></div>
 </div>
 
 <div class="iniciar">
@@ -28,11 +27,12 @@
         <button type="submit">Entrar</button><br>
     </form>
 
-    <!-- Botón de Google -->
+    <!-- Botón de Google pequeño -->
     <button id="googleSignInBtn" class="google-btn">
-        <img src="${pageContext.request.contextPath}/vista/imagenes/logo google.png" alt="Google">
+        <img src="${pageContext.request.contextPath}/vista/imagenes/logo_google.png" alt="Google">
     </button>
 
+    <!-- Form oculto -->
     <form id="googleLoginForm"
           action="${pageContext.request.contextPath}/ControladorInicioSesion"
           method="post" style="display:none;">
@@ -40,31 +40,21 @@
     </form>
 
     <div class="separador"></div>
+
     <form action="ControladorRegistrarse" method="get">
         <button type="submit">Registrarse</button>
     </form>
 </div>
-
-<div id="popup" class="popup"></div>
 
 <script>
     function validarFormulario() {
         const email = document.getElementById('email').value;
         const regex = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
         if (!regex.test(email)) {
-            mostrarPopup("El correo no es válido", "error");
+            alert("RSCUA dice: El correo no es válido");
             return false;
         }
         return true;
-    }
-
-    function mostrarPopup(mensaje, tipo) {
-        const popup = document.getElementById("popup");
-        popup.textContent = mensaje;
-        popup.className = "popup " + tipo + " show";
-        setTimeout(() => {
-            popup.className = "popup";
-        }, 3000);
     }
 
     document.getElementById('googleSignInBtn').addEventListener('click', function () {
@@ -76,14 +66,14 @@
                 document.getElementById('googleLoginForm').submit();
             })
             .catch(error => {
-                mostrarPopup("No se pudo autenticar con Google: " + error.message, "error");
+                alert("RSCUA dice: No se pudo autenticar con Google.");
             });
     });
 
-    // Mensaje desde el controlador
+    // Mensaje del controlador
     const mensaje = '<%= request.getAttribute("mensaje") != null ? request.getAttribute("mensaje") : "" %>';
     if (mensaje && mensaje !== "Inicio de sesión exitoso") {
-        mostrarPopup(mensaje, "error");
+        alert("RSCUA dice: " + mensaje);
     }
 </script>
 </body>
