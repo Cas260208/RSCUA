@@ -13,7 +13,14 @@
 
 <div class="form-container">
     <h2>Crear evento</h2>
-    <form action="#" method="post" enctype="multipart/form-data">
+    <%--
+        <form action="#" method="post" enctype="multipart/form-data">
+        <form action="${pageContext.request.contextPath}/ControladorEventos" method="post" enctype="multipart/form-data">
+        Se comentarón estás dos lineas FUNCIONALES para hacer pruebas
+        --%>
+    <form action="${pageContext.request.contextPath}/ControladorEventos" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="accion" value="crearEvento" />
+
         <div class="form-group">
             <label for="titulo">Título del evento</label>
             <input type="text" id="titulo" name="titulo" placeholder="Nombre del evento..." required />
@@ -69,6 +76,3 @@
         </div>
     </form>
 </div>
-
-</body>
-</html>
