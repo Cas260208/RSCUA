@@ -50,7 +50,7 @@ public class GestorImagenes {
         }
 
         // Ruta relativa para la base de datos
-        this.ubicacionFinal = "data/usrs/" + username + "/" + privacidad + "/" + nombreFinal;
+        this.ubicacionFinal = "publicaciones/" + username + "/" + privacidad + "/" + nombreFinal;
         return true;
     }
 

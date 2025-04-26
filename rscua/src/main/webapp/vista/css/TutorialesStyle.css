@@ -1,122 +1,137 @@
 body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
 }
 
+/* Contenedor principal de tutoriales */
 .contenedor-tutoriales {
-    max-width: 1000px;
-    margin: 50px auto;
+    max-width: 500px;
+    margin: 160px auto 40px;
     padding: 20px;
     background: white;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
 }
 
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Título centrado */
 .contenedor-tutoriales h1 {
     text-align: center;
     margin-bottom: 30px;
-    color: #111;
+    font-size: 28px;
 }
 
+/* Tarjetas de tutorial */
 .tarjeta-tutorial {
-    display: flex;
-    background-color: #fafafa;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
     margin-bottom: 20px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
+    background-color: #fafafa;
 }
 
-.tarjeta-tutorial:hover {
-    transform: scale(1.01);
+/* Contenedor de las imágenes */
+.imagenes-tutorial {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
 }
 
-.tarjeta-tutorial img {
-    width: 250px;
+/* Estilo individual de imágenes */
+.imagen-tutorial {
+    max-height: 45px;
+    max-width: 50%;
     height: auto;
-    object-fit: cover;
+    border-radius: 8px;
     cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.contenido {
-    padding: 20px;
-    flex-grow: 1;
+/* Efecto hover */
+.imagen-tutorial:hover {
+    transform: scale(1.1);
+    transform-origin: center top;
 }
 
+/* Contenido de cada tutorial */
 .contenido h2 {
-    margin: 0 0 10px;
+    margin: 0;
     font-size: 22px;
-    color: #222;
 }
 
 .contenido p {
-    font-size: 14px;
-    margin: 0 0 15px;
+    margin: 5px 0 15px;
     color: #666;
 }
 
-.acciones {
-    display: flex;
-    gap: 10px;
-}
-
+/* Botones de acción */
 .acciones button {
-    padding: 8px 16px;
-    background-color: #000;
-    color: white;
+    margin-right: 10px;
+    padding: 8px 15px;
+    background-color: #0d6efd;
     border: none;
-    border-radius: 6px;
+    color: white;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .acciones button:hover {
-    background-color: #444;
+    background-color: #0a58ca;
 }
 
 /* Modal de imagen ampliada */
 .modal {
     display: none;
     position: fixed;
-    z-index: 9999;
-    padding-top: 60px;
+    z-index: 999;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.open {
+    display: flex;
 }
 
 .modal-contenido {
-    margin: auto;
-    display: block;
-    max-width: 80%;
-    max-height: 80%;
+    max-width: 600px;
+    max-height: 80vh;
     border-radius: 10px;
-    box-shadow: 0 0 10px white;
-    animation: zoom 0.4s ease;
-}
-
-@keyframes zoom {
-    from { transform: scale(0.6); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    object-fit: contain;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
 .cerrar {
     position: absolute;
     top: 20px;
     right: 35px;
-    color: #ffffff;
-    font-size: 35px;
+    color: white;
+    font-size: 40px;
     font-weight: bold;
     cursor: pointer;
 }
 
-.cerrar:hover {
-    color: #ccc;
+@media (max-width: 600px) {
+    .modal-contenido {
+        max-width: 90%;
+    }
 }

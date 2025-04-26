@@ -333,4 +333,73 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+/* ───────── FEED: Zona de publicaciones ───────── */
+.feed-publicaciones {
+    max-width: 700px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 1rem;
+}
 
+/* Card de cada publicación */
+.publicacion {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 1.25rem 1.5rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.publicacion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* Cabecera (avatar + meta) */
+.publicacion header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+.publicacion .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eee;
+}
+
+/* Texto y salto de línea */
+.publicacion .texto {
+    margin: 0.75rem 0;
+    white-space: pre-line;
+    line-height: 1.5;
+    color: #333;
+    font-size: 1rem;
+}
+
+/* Imagen de la publicación */
+.imagen-publicacion {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0.75rem 0;
+}
+
+/* Etiquetas */
+.etiquetas {
+    font-size: 0.85rem;
+    color: #007bff;
+    margin-top: 0.5rem;
+}
+
+/* Mensaje cuando no hay publicaciones */
+.sin-publicaciones {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+    padding: 2rem 0;
+}

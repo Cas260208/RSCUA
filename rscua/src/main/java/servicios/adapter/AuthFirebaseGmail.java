@@ -1,4 +1,4 @@
-package modulo.gestorAutenticacion.firebase;
+package servicios.adapter;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
@@ -11,4 +11,6 @@ public class AuthFirebaseGmail {
     public FirebaseToken login(String idToken) throws FirebaseAuthException {
         return FirebaseAuth.getInstance().verifyIdToken(idToken);
     }
+
+
 }

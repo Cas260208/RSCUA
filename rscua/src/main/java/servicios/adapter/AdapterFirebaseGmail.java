@@ -1,4 +1,4 @@
-package modulo.gestorAutenticacion.firebase;
+package servicios.adapter;
 
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.FirebaseAuthException;

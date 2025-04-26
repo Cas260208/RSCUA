@@ -58,13 +58,15 @@ public class ControladorPublicaciones extends HttpServlet {
         String imagenRuta = null;
 
         if (imagenPart != null && imagenPart.getSize() > 0) {
-            String basePath = request.getServletContext().getRealPath("/data/usrs");
+            String basePath = request.getServletContext().getRealPath("/publicaciones");
             GestorImagenes gestorImagenes = new GestorImagenes(basePath);
             gestorImagenes.guardarImagen(imagenPart, usuario.getUsername(), privacidad.toLowerCase(), 1080);
             imagenRuta = gestorImagenes.getUbicacion();
+
         }
 
-        nuevaPublicacion.setImagen(imagenRuta);
+       nuevaPublicacion.setImagen(imagenRuta);
+
 
         // Guardar la publicación en la base de datos
         boolean publicada = gestorPublicaciones.crearPublicacion(nuevaPublicacion);
