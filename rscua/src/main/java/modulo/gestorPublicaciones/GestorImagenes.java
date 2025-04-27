@@ -12,8 +12,6 @@ import java.nio.file.Paths;
 public class GestorImagenes {
     private String ubicacionFinal;
 
-    // Ruta absoluta al directorio de "data/usrs"
-    //private static final String BASE_PATH = "C:/Users/santc/IdeaProjects/RSCUA/rscua/src/main/webapp/data/usrs";
     private String basePath;
 
     public GestorImagenes(String basePath) {

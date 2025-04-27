@@ -73,8 +73,10 @@ public class ControladorInicioSesion extends HttpServlet {
                 session.setAttribute("configuracion", cfg);
 
                 request.setAttribute("mensaje", "Inicio con Google exitoso");
-                request.getRequestDispatcher("vista/IU_Feed.jsp")
-                        .forward(request, response);
+//                request.getRequestDispatcher("vista/IU_Feed.jsp")
+//                        .forward(request, response);
+                response.sendRedirect("ControladorFeed");
+
                 return;
 
             } catch (FirebaseAuthException e) {
@@ -123,8 +125,9 @@ public class ControladorInicioSesion extends HttpServlet {
             session.setAttribute("configuracion", configuracion);
 
             request.setAttribute("mensaje", "Inicio de sesión exitoso");
-            request.getRequestDispatcher("vista/IU_Feed.jsp")
-                    .forward(request, response);
+//            request.getRequestDispatcher("vista/IU_Feed.jsp")
+//                    .forward(request, response);
+            response.sendRedirect("ControladorFeed");
 
         } else {
             System.out.println("\n❌ Error al iniciar sesión");
