@@ -46,6 +46,33 @@ public class ControladorPerfil extends HttpServlet {
             request.getRequestDispatcher("vista/IU_Perfil.jsp")
                     .forward(request, response);
 
+        } else if ("eliminarPublicacion".equals(accion)) {
+            // ── 1) Recuperar id de la publicación a eliminar
+            String idParam = request.getParameter("id");
+            if (idParam != null) {
+                try {
+                    int idPub = Integer.parseInt(idParam);
+                    // ── 2) Llamar al gestor para borrar de la BD
+                    gestorPublicaciones.eliminarPublicacion(idPub);
+                } catch (NumberFormatException e) {
+                    // id no numérico: ignorar o loggear
+                }
+            }
+            // ── 3) Volver a cargar el perfil con las publicaciones actualizadas
+            HttpSession session = request.getSession();
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            if (usuario != null) {
+                List<Publicaciones> misPublicaciones =
+                        gestorPublicaciones.obtenerPublicacionesPorUsuario(usuario.getId());
+                misPublicaciones.sort(
+                        Comparator.comparing(Publicaciones::getFechaPublicacion)
+                                .reversed()
+                );
+                request.setAttribute("misPublicaciones", misPublicaciones);
+            }
+            request.getRequestDispatcher("vista/IU_Perfil.jsp")
+                    .forward(request, response);
+
         } else if ("configuracion".equals(accion)) {
             request.getRequestDispatcher("vista/IU_Configuracion.jsp")
                     .forward(request, response);

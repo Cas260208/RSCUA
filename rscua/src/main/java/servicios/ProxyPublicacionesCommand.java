@@ -3,6 +3,7 @@ package servicios;
 import modulo.gestorPublicaciones.Publicaciones;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 
 public class ProxyPublicacionesCommand {
     private Conexion conexion;
@@ -25,10 +26,11 @@ public class ProxyPublicacionesCommand {
     }
 
     public boolean eliminarPublicacion(int idPublicacion) throws SQLException {
-        String callSP = "{CALL sp_eliminar_publicacion(?)}";
-        try (CallableStatement cs = conexion.getConexion().prepareCall(callSP)) {
-            cs.setInt(1, idPublicacion);
-            return cs.executeUpdate() > 0;
+        // Usamos DELETE directo en vez de llamar al procedure (no se creo jaja)
+        String sql = "DELETE FROM publicaciones WHERE id = ?";
+        try (PreparedStatement ps = conexion.getConexion().prepareStatement(sql)) {
+            ps.setInt(1, idPublicacion);
+            return ps.executeUpdate() > 0;
         }
     }
 
