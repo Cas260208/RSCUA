@@ -3,6 +3,7 @@ package controlador;
 import modulo.gestorAutenticacion.Usuario;
 import modulo.gestorPublicaciones.GestorPublicaciones;
 import modulo.gestorPublicaciones.Publicaciones;
+import modulo.gestorSeguimientos.GestorSeguimientos;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,8 @@ public class ControladorPerfil extends HttpServlet {
 
     // Instancia de GestorPublicaciones
     private GestorPublicaciones gestorPublicaciones = new GestorPublicaciones();
+    private final  GestorSeguimientos gestorSeguimientos  = new GestorSeguimientos();   // ← NUEVO
+
 
     @Override
     protected void doPost(HttpServletRequest request,
@@ -39,8 +42,14 @@ public class ControladorPerfil extends HttpServlet {
                                 .reversed()
                 );
 
+                /* ───────── 4) CONTADORES Seguimientos ───────── */
+                int seguidores = gestorSeguimientos.cargarNumeroSeguidores(usuario.getId());
+                int seguidos   = gestorSeguimientos.cargarNumeroSeguidos  (usuario.getId());
+
                 // ── 4) Enviar al JSP
                 request.setAttribute("misPublicaciones", misPublicaciones);
+                request.setAttribute("seguidoresCount", seguidores);   // ← NUEVO
+                request.setAttribute("seguidosCount",   seguidos);     // ← NUEVO
             }
 
             request.getRequestDispatcher("vista/IU_Perfil.jsp")

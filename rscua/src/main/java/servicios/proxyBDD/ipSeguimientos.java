@@ -4,9 +4,13 @@ import java.util.List;
 
 public interface ipSeguimientos {
 
-    public List<Integer> cargarIdsUsuariosSeguimientos(int UsuarioId);
+    public List<Integer> cargarIdsUsuariosSeguidores(int UsuarioId);
 
-    public List<String> cargarUsernamesSeguimientos(List<Integer> seguimientosUsuarioIds);
+    public List<Integer> cargarIdsUsuariosSeguidos(int UsuarioId);
+
+    public List<String> cargarUsernamesSeguidores(int UsuarioId);
+
+    public List<String> cargarUsernamesSeguidos(int UsuarioId);
 
     public int cargarNumeroSeguidores(int UsuarioId);
 

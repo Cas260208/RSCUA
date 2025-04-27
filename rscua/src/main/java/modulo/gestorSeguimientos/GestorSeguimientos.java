@@ -15,21 +15,41 @@ public class GestorSeguimientos implements ipSeguimientos {
     }
 
     @Override
-    public List<Integer> cargarIdsUsuariosSeguimientos(int UsuarioId) {
+    public List<Integer> cargarIdsUsuariosSeguidores(int UsuarioId) {
         try {
-            return pSeguimientos.cargarIdsUsuariosSeguimientos(UsuarioId);
+            return pSeguimientos.cargarIdsUsuariosSeguidores(UsuarioId);
         } catch (DataAccessException e) {
-            System.err.println("Error al obtener IDs de seguidos: " + e.getCause());
+            System.err.println("Error al cargar ids seguidos: " + e.getCause());
             return null;
         }
     }
 
     @Override
-    public List<String> cargarUsernamesSeguimientos(List<Integer> seguimientosUsuarioIds) {
+    public List<Integer> cargarIdsUsuariosSeguidos(int UsuarioId) {
         try {
-            return pSeguimientos.cargarUsernamesSeguimientos(seguimientosUsuarioIds);
+            return pSeguimientos.cargarIdsUsuariosSeguidos(UsuarioId);
         } catch (DataAccessException e) {
-            System.err.println("Error al obtener usernames de seguidos: " + e.getCause());
+            System.err.println("Error al cargar ids seguidos: " + e.getCause());
+            return null;
+        }
+    }
+
+    @Override
+    public List<String> cargarUsernamesSeguidores(int UsuarioId) {
+        try {
+            return pSeguimientos.cargarUsernamesSeguidores(UsuarioId);
+        } catch (DataAccessException e) {
+            System.err.println("Error al cargar usernames seguidores: " + e.getCause());
+            return null;
+        }
+    }
+
+    @Override
+    public List<String> cargarUsernamesSeguidos(int UsuarioId) {
+        try {
+            return pSeguimientos.cargarUsernamesSeguidos(UsuarioId);
+        } catch (DataAccessException e) {
+            System.err.println("Error al cargar usernames seguidos: " + e.getCause());
             return null;
         }
     }

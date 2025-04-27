@@ -23,8 +23,21 @@
     <title>Perfil – <%= usuario.getUsername() %></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/vista/css/PerfilStyle.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/vista/css/FeedStyle.css"/>
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/vista/css/VerPublicacion.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/vista/css/VerPublicacion.css"/>
+
+    <!-- === estilos rápidos para overlay de seguimientos === -->
+    <style>
+        #overlay-follows{position:fixed;inset:0;background:rgba(0,0,0,.65);
+            display:none;align-items:center;justify-content:center;z-index:999;}
+        #overlay-follows .panel{width:320px;max-height:80vh;overflow-y:auto;
+            background:#fff;border-radius:10px;padding:20px;position:relative;}
+        #close-overlay{position:absolute;top:6px;right:8px;border:none;
+            background:transparent;font-size:22px;cursor:pointer;}
+        .item-follow{display:flex;align-items:center;gap:10px;margin:10px 0;}
+        .item-follow .avatar{width:42px;height:42px;border-radius:50%;}
+        .item-follow .username{font-weight:600;}
+    </style>
+
 </head>
 <body>
 
@@ -39,15 +52,18 @@
          alt="Foto de Perfil" onclick="alert('Foto de perfil seleccionada')">
     <h1><%= usuario.getNombre() + " " + usuario.getApellido() %></h1>
     <p>@<%= usuario.getUsername() %></p>
+
+    <!-- === Enlaces contadores CORREGIDOS === -->
     <div class="follow-info">
-        <a href="ControladorPerfil?accion=seguidores">
+        <a href="#" class="link-follow" data-tipo="seguidores">
             <strong><%= seguidoresCount %></strong> Seguidores
         </a>
         <span class="separator">·</span>
-        <a href="ControladorPerfil?accion=seguidos">
+        <a href="#" class="link-follow" data-tipo="siguiendo">
             <strong><%= seguidosCount %></strong> Siguiendo
         </a>
     </div>
+
 </div>
 
 <!-- INFORMACIÓN -->
@@ -206,6 +222,66 @@
                 dd.classList.remove('show');
         });
     });
+</script>
+
+<!-- ░░░░░░░░░░  OVERLAY LISTA DE SEGUIMIENTOS ░░░░░░░░░░ -->
+<div id="overlay-follows">
+    <div class="panel">
+        <button id="close-overlay">✕</button>
+        <h3 id="titulo-overlay">Seguidores</h3>
+        <ul id="lista-follows"></ul>
+    </div>
+</div>
+
+<!-- plantilla para un ítem -->
+<template id="tpl-item-follow">
+    <li class="item-follow">
+        <img class="avatar" src="" alt="Foto">
+        <span class="username"></span>
+    </li>
+</template>
+
+<!-- ==========  JS del overlay  ========== -->
+<script>
+    /* ---------- overlay seguimientos ---------- */
+    const ctx = '<%= request.getContextPath() %>';   //  ←  /rscua_war_exploded  (por ejemplo)
+
+    document.querySelectorAll('.link-follow').forEach(el=>{
+        el.addEventListener('click', ev=>{
+            ev.preventDefault();
+
+            const tipo = ev.currentTarget.dataset.tipo;      // seguidores | siguiendo
+            fetch(`${ctx}/ControladorSeguimientos?tipo=${tipo}&ajax=1`)   //  ← AQUÍ
+                .then(r => r.json())
+                .then(data =>{
+                    rellenarOverlay(tipo, data);
+                    document.getElementById('overlay-follows').style.display = 'flex';
+                })
+                .catch(()=>alert('No se pudo cargar ' + tipo));
+        });
+    });
+
+
+
+    document.getElementById('close-overlay')
+        .addEventListener('click',()=>(
+            document.getElementById('overlay-follows').style.display='none'));
+
+    function rellenarOverlay(tipo, arr){
+        document.getElementById('titulo-overlay').textContent =
+            (tipo === 'seguidores') ? 'Seguidores' : 'Siguiendo';
+
+        const ul  = document.getElementById('lista-follows');
+        ul.innerHTML = '';
+        const tpl = document.getElementById('tpl-item-follow').content;
+
+        arr.forEach(obj=>{
+            const li = tpl.cloneNode(true);
+            li.querySelector('.avatar').src        = obj.foto;
+            li.querySelector('.username').textContent = '@'+obj.user;
+            ul.appendChild(li);
+        });
+    }
 </script>
 
 </body>

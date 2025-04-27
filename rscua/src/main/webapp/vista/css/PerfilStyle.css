@@ -319,3 +319,18 @@
 .perfil-header .follow-info .separator {
     color: #555;
 }
+#overlay-follows{
+    position:fixed; inset:0; background:rgba(0,0,0,.6);
+    display:none; align-items:center; justify-content:center; z-index:999;
+}
+#overlay-follows .panel{
+    width:320px; max-height:80vh; overflow-y:auto;
+    background:#fff; border-radius:10px; padding:20px; position:relative;
+}
+#overlay-follows #close-overlay{
+    position:absolute; top:8px; right:8px; border:none;
+    background:transparent; font-size:20px; cursor:pointer;
+}
+.item-follow{display:flex;align-items:center;gap:10px;margin:10px 0;}
+.item-follow .avatar{width:42px;height:42px;border-radius:50%;}
+.item-follow .username{font-weight:600;}

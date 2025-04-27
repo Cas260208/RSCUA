@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProxySeguimientos implements ipSeguimientos {
+
     private final Conexion conexion;
 
     public ProxySeguimientos() {
@@ -20,50 +20,87 @@ public class ProxySeguimientos implements ipSeguimientos {
         }
     }
 
-
+    // ───────── Listas de IDs ─────────
     @Override
-    public List<Integer> cargarIdsUsuariosSeguimientos(int UsuarioId) {
+    public List<Integer> cargarIdsUsuariosSeguidores(int usuarioId) {
+        List<Integer> ids = new ArrayList<>();
         try (CallableStatement cs = conexion.getConexion()
-                .prepareCall("{CALL sp_cargar_ids_seguimientos(?)}")) {
-            cs.setInt(1, UsuarioId);
+                .prepareCall("{CALL sp_cargar_ids_seguidores(?)}")) {
+            cs.setInt(1, usuarioId);
             try (ResultSet rs = cs.executeQuery()) {
-                List<Integer> ids = new ArrayList<>();
                 while (rs.next()) {
-                    ids.add(rs.getInt("id_usuario_seguido"));
+                    // ← esta columna SÍ se llama id_usuario_seguidor
+                    ids.add(rs.getInt("usuario_id"));
                 }
-                return ids;
             }
         } catch (SQLException e) {
             throw new DataAccessException(e);
         }
+        return ids;
     }
 
     @Override
-    public List<String> cargarUsernamesSeguimientos(List<Integer> seguimientosUsuarioIds) {
-        String json = "[" + seguimientosUsuarioIds.stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(",")) +
-                "]";
+    public List<Integer> cargarIdsUsuariosSeguidos(int usuarioId) {
+        List<Integer> ids = new ArrayList<>();
         try (CallableStatement cs = conexion.getConexion()
-                .prepareCall("{CALL sp_cargar_usernames_seguimientos(?)}")) {
-            cs.setString(1, json);
+                .prepareCall("{CALL sp_cargar_ids_seguidos(?)}")) {
+            cs.setInt(1, usuarioId);
             try (ResultSet rs = cs.executeQuery()) {
-                List<String> names = new ArrayList<>();
+                while (rs.next()) {
+                    // ← aquí había que usar id_usuario_seguido
+                    ids.add(rs.getInt("usuario_id"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException(e);
+        }
+        return ids;
+    }
+
+
+    /* ─────────────  LISTAS DE USERNAMES  ───────────── */
+
+    @Override
+    public List<String> cargarUsernamesSeguidores(int usuarioId) {
+        List<String> names = new ArrayList<>();
+        try (CallableStatement cs = conexion.getConexion()
+                .prepareCall("{CALL sp_cargar_usernames_seguidores(?)}")) {
+            cs.setInt(1, usuarioId);
+            try (ResultSet rs = cs.executeQuery()) {
                 while (rs.next()) {
                     names.add(rs.getString("username"));
                 }
-                return names;
             }
+            return names;
         } catch (SQLException e) {
             throw new DataAccessException(e);
         }
     }
 
     @Override
-    public int cargarNumeroSeguidores(int UsuarioId) {
+    public List<String> cargarUsernamesSeguidos(int usuarioId) {
+        List<String> names = new ArrayList<>();
+        try (CallableStatement cs = conexion.getConexion()
+                .prepareCall("{CALL sp_cargar_usernames_seguidos(?)}")) {
+            cs.setInt(1, usuarioId);
+            try (ResultSet rs = cs.executeQuery()) {
+                while (rs.next()) {
+                    names.add(rs.getString("username"));
+                }
+            }
+            return names;
+        } catch (SQLException e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    /* ─────────────  CONTADORES  ───────────── */
+
+    @Override
+    public int cargarNumeroSeguidores(int usuarioId) {
         try (CallableStatement cs = conexion.getConexion()
                 .prepareCall("{CALL sp_cargar_numero_seguidores(?)}")) {
-            cs.setInt(1, UsuarioId);
+            cs.setInt(1, usuarioId);
             try (ResultSet rs = cs.executeQuery()) {
                 return rs.next() ? rs.getInt("numero_seguidores") : 0;
             }
@@ -73,10 +110,10 @@ public class ProxySeguimientos implements ipSeguimientos {
     }
 
     @Override
-    public int cargarNumeroSeguidos(int UsuarioId) {
+    public int cargarNumeroSeguidos(int usuarioId) {
         try (CallableStatement cs = conexion.getConexion()
                 .prepareCall("{CALL sp_cargar_numero_seguidos(?)}")) {
-            cs.setInt(1, UsuarioId);
+            cs.setInt(1, usuarioId);
             try (ResultSet rs = cs.executeQuery()) {
                 return rs.next() ? rs.getInt("numero_seguidos") : 0;
             }
@@ -85,12 +122,14 @@ public class ProxySeguimientos implements ipSeguimientos {
         }
     }
 
+    /* ─────────────  OPERACIONES SEGUIR/DEJAR DE SEGUIR  ───────────── */
+
     @Override
-    public void agregarSeguidor(int UsuarioId, int UsuarioSeguidorId) {
+    public void agregarSeguidor(int usuarioId, int usuarioSeguidorId) {
         try (CallableStatement cs = conexion.getConexion()
                 .prepareCall("{CALL sp_agregar_seguidor(?,?)}")) {
-            cs.setInt(1, UsuarioId);
-            cs.setInt(2, UsuarioSeguidorId);
+            cs.setInt(1, usuarioId);
+            cs.setInt(2, usuarioSeguidorId);
             cs.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e);
@@ -98,11 +137,11 @@ public class ProxySeguimientos implements ipSeguimientos {
     }
 
     @Override
-    public void agregarSeguido(int UsuarioId, int UsuarioSeguidoId) {
+    public void agregarSeguido(int usuarioId, int usuarioSeguidoId) {
         try (CallableStatement cs = conexion.getConexion()
                 .prepareCall("{CALL sp_agregar_seguido(?,?)}")) {
-            cs.setInt(1, UsuarioId);
-            cs.setInt(2, UsuarioSeguidoId);
+            cs.setInt(1, usuarioId);
+            cs.setInt(2, usuarioSeguidoId);
             cs.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e);
@@ -110,11 +149,11 @@ public class ProxySeguimientos implements ipSeguimientos {
     }
 
     @Override
-    public void eliminarSeguidor(int UsuarioId, int UsuarioSeguidorId) {
+    public void eliminarSeguidor(int usuarioId, int usuarioSeguidorId) {
         try (CallableStatement cs = conexion.getConexion()
                 .prepareCall("{CALL sp_eliminar_seguidor(?,?)}")) {
-            cs.setInt(1, UsuarioId);
-            cs.setInt(2, UsuarioSeguidorId);
+            cs.setInt(1, usuarioId);
+            cs.setInt(2, usuarioSeguidorId);
             cs.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e);
@@ -122,24 +161,19 @@ public class ProxySeguimientos implements ipSeguimientos {
     }
 
     @Override
-    public void eliminarSeguido(int UsuarioId, int UsuarioSeguidoId) {
+    public void eliminarSeguido(int usuarioId, int usuarioSeguidoId) {
         try (CallableStatement cs = conexion.getConexion()
                 .prepareCall("{CALL sp_eliminar_seguido(?,?)}")) {
-            cs.setInt(1, UsuarioId);
-            cs.setInt(2, UsuarioSeguidoId);
+            cs.setInt(1, usuarioId);
+            cs.setInt(2, usuarioSeguidoId);
             cs.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e);
         }
     }
 
-    @Override
-    public void bloquearUsuario(int UsuarioId, int UsuarioBloqueadoId) {
-        // no implementado
-    }
+    /* ─────────────  NO IMPLEMENTADO  ───────────── */
 
-    @Override
-    public void desbloquearUsuario(int UsuarioId, int UsuarioDesbloqueadoId) {
-        // no implementado
-    }
+    @Override public void bloquearUsuario (int u, int b) { /* N/I */ }
+    @Override public void desbloquearUsuario(int u, int b) { /* N/I */ }
 }

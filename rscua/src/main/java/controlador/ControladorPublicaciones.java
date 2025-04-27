@@ -1,5 +1,6 @@
 package controlador;
 
+import modulo.gestorPublicaciones.GestorImagenes;
 import modulo.gestorPublicaciones.GestorPublicaciones;
 import modulo.gestorPublicaciones.Publicaciones;
 import modulo.gestorAutenticacion.Usuario;
