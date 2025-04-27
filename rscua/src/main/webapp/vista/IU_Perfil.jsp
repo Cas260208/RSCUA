@@ -114,7 +114,11 @@
                     </button>
                     <div class="options-dropdown">
                         <ul>
-                            <li onclick="deletePost(<c:out value='${pub.id}'/>)">Eliminar publicación</li>
+                            <li>
+                                <a href="ControladorPerfil?accion=eliminarPublicacion&id=${pub.id}">
+                                    Eliminar publicación
+                                </a>
+                            </li>
                             <li onclick="reportPost(<c:out value='${pub.id}'/>)">Reportar publicación</li>
                             <li onclick="editPost(<c:out value='${pub.id}'/>)">Editar publicación</li>
                         </ul>
