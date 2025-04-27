@@ -1,5 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="modulo.gestorAutenticacion.Usuario" %>
 <!-- Fragmento para crear publicación -->
+<%
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    String nombreCompleto = usuario.getNombre() + " " + usuario.getApellido();
+    String username = usuario.getUsername();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +26,7 @@
         <form action="ControladorPublicaciones" method="post" enctype="multipart/form-data">
             <div class="user">
                 <img src="${pageContext.request.contextPath}/vista/imagenes/777.jpg" alt="Perfil">
-                <span>@Zaganav29</span>
+                <span>@<%= username %></span>
             </div>
             <!-- Campo para contenido -->
             <textarea name="texto" placeholder="¿Qué estás pensando hoy?"></textarea>

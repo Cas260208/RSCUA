@@ -13,12 +13,16 @@
 
 <div class="form-container">
   <h2>Crear historia</h2>
+<!-- con la siguiente linea se mandan las peticiones de info al controlador -->
+  <form action="<c:url value='/ControladorHistorias'/>"
+        method="post"
+        enctype="multipart/form-data">
 
-  <form action="#" method="post" enctype="multipart/form-data">
-
+    <!-- Campo para contenido -->
     <label for="descripcion">Descripción (opcional)</label>
     <textarea id="descripcion" name="descripcion" placeholder="¿Qué deseas compartir hoy?"></textarea>
 
+    <!-- Subir imagen -->
     <label for="imagen">Subir Imagen (JPG, JPEG o PNG):</label>
     <input type="file" name="imagen" id="imagen" accept="image/jpeg, image/jpg, image/png">
 
@@ -28,7 +32,7 @@
     </div>
 
     <div class="botones">
-      <button type="submit" class="boton-publicar">Publicar historia</button>
+      <button type="submit" >Publicar </button>
     </div>
   </form>
 </div>

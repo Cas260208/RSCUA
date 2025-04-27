@@ -50,6 +50,12 @@ public class Usuario {
         this.password = password;
     }
 
+    // Para seguimientos (ver informacion de usuario seguido o seguidor):
+
+    public Usuario(int id, String username) {this.id=id; this.username=username;}
+
+    //
+
     public int getId() { return id; }
     public void setId(int id) {
         this.id = id;

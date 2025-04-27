@@ -3,7 +3,6 @@ package controlador;
 import modulo.gestorPublicaciones.GestorPublicaciones;
 import modulo.gestorPublicaciones.Publicaciones;
 import modulo.gestorAutenticacion.Usuario;
-import modulo.gestorPublicaciones.GestorImagenes;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;

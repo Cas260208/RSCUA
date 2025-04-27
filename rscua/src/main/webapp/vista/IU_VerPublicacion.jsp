@@ -1,6 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="modulo.gestorAutenticacion.Usuario" %>
 <%
+
+    // IMPORTANTE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //
+    // Se debe cambiar para ver los datos del publicador seguido, no del seguidor
     Usuario usuario = (Usuario) session.getAttribute("usuario");
     String nombreCompleto = usuario.getNombre() + " " + usuario.getApellido();
     String username = usuario.getUsername();

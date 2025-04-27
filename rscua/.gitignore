@@ -39,3 +39,6 @@ build/
 
 # No commitear credenciales de Firebase
 /src/main/webapp/WEB-INF/serviceAccountKey.json
+
+# No commitear credenciales de Gmail
+/src/main/webapp/WEB-INF/mail.properties

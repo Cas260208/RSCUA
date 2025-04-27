@@ -18,6 +18,7 @@ public class ProxyAutenticacion {
         this.conexion = new Conexion();
     }
 
+
     // Se elimina el metodo existeCorreoTelefonoOUsername y se reemplaza por el siguiente:
     public boolean validarUsuario(String email, String phone, String username, Date fechaNacimiento) {
         String callSP = "{CALL sp_validar_usuario(?,?,?,?)}";
