@@ -75,40 +75,12 @@
 
 <!-- FEED DE PUBLICACIONES -->
 <div class="feed-publicaciones">
-    <% if (publicaciones == null || publicaciones.isEmpty()) { %>
     <p class="sin-publicaciones">Aún no hay publicaciones.</p>
-    <% } else {
-        for (Publicaciones pub : publicaciones) { %>
-    <article class="publicacion">
-        <header>
-            <img class="avatar"
-                 src="<%= request.getContextPath() %>/<%= pub.getImagen() != null ? pub.getImagen() : "vista/imagenes/avatar-default.png" %>"
-                 alt="Avatar">
-            <div class="meta">
-            <span class="autor">
-              <%= (usuario != null) ? usuario.getUsername() : "Invitado" %>
-            </span>
-                <time datetime="<%= pub.getFechaPublicacion() %>">
-                    <%= pub.getFechaPublicacion() %>
-                </time>
-            </div>
-        </header>
-        <p class="texto">
-            <%= (pub.getTexto() != null)
-                    ? pub.getTexto().replaceAll("\\n", "<br>")
-                    : "" %>
-        </p>
-        <% if (pub.getImagen() != null && !pub.getImagen().isEmpty()) { %>
-        <img class="imagen-publicacion"
-             src="<%= request.getContextPath() + "/" + pub.getImagen() %>"
-             alt="Imagen publicación">
-        <% } %>
-        <% if (pub.getEtiquetas() != null && !pub.getEtiquetas().isEmpty()) { %>
-        <p class="etiquetas">Etiquetas: <%= pub.getEtiquetas() %></p>
-        <% } %>
-    </article>
-    <%   }
-    } %>
+
+    <!-- ── PUBLICACIÓN SIMULADA (IU_VerPublicacion.jsp) ── -->
+    <jsp:include page="IU_VerPublicacion.jsp"/>
+
+
 </div>
 
 </body>

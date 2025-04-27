@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GestorPublicaciones {
     private ProxyPublicacionesCommand proxyPublicacionesCommand;
-    private ProxyPublicacionesQuery proxyPublicacionesQuery;
+    private static ProxyPublicacionesQuery proxyPublicacionesQuery;
 
     public GestorPublicaciones() {
         try {
@@ -45,7 +45,7 @@ public class GestorPublicaciones {
         }
     }
 
-    public List<Publicaciones> obtenerPublicacionesPorUsuario(int usuarioId) {
+    public static List<Publicaciones> obtenerPublicacionesPorUsuario(int usuarioId) {
         try {
             return proxyPublicacionesQuery.obtenerPublicacionesPerfil(usuarioId);
         } catch (SQLException e) {
