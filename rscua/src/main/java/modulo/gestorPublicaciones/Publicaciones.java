@@ -2,7 +2,7 @@ package modulo.gestorPublicaciones;
 
 import java.sql.Timestamp;
 
-public class Publicaciones {
+public class Publicaciones implements InterfazPublicacion{
 
     public enum Privacidad {
         PUBLICO, AMIGOS, PRIVADO
@@ -129,4 +129,28 @@ public class Publicaciones {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+
+    @Override
+    public void dispatch() {
+        ProxyPublicaciones proxy = new ProxyPublicaciones(this);
+        proxy.dispatch();
+    }
+
+    /**
+     * Aquí “ensamblamos” y mostramos cada parte (Whole-Part).
+     */
+    public void realDispatch() {
+        System.out.println("[Publicacion] Mostrando contenido:");
+        // Parte Descripción
+        new Descripcion(texto).mostrar();
+
+        // Parte Multimedia (si existe)
+        if (imagen != null && !imagen.isEmpty()) {
+            new Multimedia(imagen).mostrar();
+        }
+
+        // Parte Configuración
+        new ConfiguracionP(privacidad.name().toLowerCase()).mostrar();
+    }
+
 }

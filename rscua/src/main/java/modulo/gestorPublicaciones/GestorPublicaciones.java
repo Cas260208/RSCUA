@@ -25,7 +25,15 @@ public class GestorPublicaciones {
         }
     }
 
+
+     //Ahora aplicamos Whole-Part: primero dispatch() para mostrar las partes,
+     //luego en la BD usando ProxyPublicacionesCommand.
+
     public boolean crearPublicacion(Publicaciones nuevaPublicacion) {
+        // 1) Despacho patrón Whole-Part
+        nuevaPublicacion.dispatch();
+
+        // 2) BD
         try {
             return proxyPublicacionesCommand.crearPublicacion(nuevaPublicacion);
         } catch (SQLException e) {
