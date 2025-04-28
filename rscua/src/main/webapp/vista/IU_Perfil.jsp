@@ -116,7 +116,7 @@
     </c:if>
 
     <c:forEach var="pub" items="${misPublicaciones}">
-        <div class="post-container" id="post-<c:out value='${pub.id}'/>">
+        <div class="post-container" id="post-${pub.id}" data-pubid="${pub.id}">
 
             <!-- Header con avatar y menú ⋮ -->
             <div class="header">
@@ -170,58 +170,85 @@
 
             <!-- Sección de comentarios -->
             <div class="seccion-comentarios">
-                <div class="comentarios-antiguos">
-                    <!-- Aquí podrías iterar comentarios reales -->
-                </div>
+                <div class="comentarios-antiguos"></div>
+
                 <div class="nuevo-comentario">
                     <textarea placeholder="Escribe un comentario..."></textarea>
                     <button class="btn-enviar" onclick="postComment(this)">
-                        <img src="${pageContext.request.contextPath}/vista/imagenes/send.png" alt="Enviar">
+                        <img src="${pageContext.request.contextPath}/vista/imagenes/send.png"
+                             alt="Enviar">
                     </button>
                 </div>
             </div>
         </div>
     </c:forEach>
-</div>
 
-<!-- Scripts de interacción idénticos a IU_VerPublicacion -->
-<script>
-    function toggleDropdown(btn) {
-        btn.nextElementSibling.classList.toggle('show');
-    }
-    function deletePost(id) { alert('Eliminar post ' + id); }
-    function reportPost(id) { alert('Reportar post ' + id); }
-    function editPost(id)  { alert('Editar post ' + id); }
+    <!-- ==========  SCRIPTS ========== -->
+    <script>
+        /* ②  UNA sola constante ctx */
+        const ctx = '<%= request.getContextPath() %>';   //  ej.  /rscua
 
-    function likePost(id)  { alert('Me gusta al post ' + id); }
+        /* ===== Comentarios ===== */
 
-    function mostrarComentarios(btn) {
-        const cont = btn.closest('.post-container')
-            .querySelector('.seccion-comentarios');
-        cont.style.display = cont.style.display === 'block' ? 'none' : 'block';
-    }
+        function mostrarComentarios(btn){
+            const cont = btn.closest('.post-container')
+                .querySelector('.seccion-comentarios');
 
-    function mostrarModalCompartir(id) {
-        // crea o muestra un modal igual al de IU_VerPublicacion
-        alert('Mostrar modal compartir post ' + id);
-    }
-    function mostrarModalGuardar(id) {
-        alert('Mostrar modal guardar post ' + id);
-    }
+            if (!cont.dataset.cargado){                           // aún no se cargó
+                const pubId = btn.closest('.post-container').dataset.pubid;  // ③
+                fetch(`${ctx}/ControladorComentarios?pub=${pubId}`)
+                    .then(r => r.json())
+                    .then(arr => {
+                        const divOld = cont.querySelector('.comentarios-antiguos');
+                        arr.forEach(o => divOld.appendChild(creaHtmlComentario(o.user,o.texto)));
+                        cont.dataset.cargado = "1";
+                    });
+            }
+            cont.style.display = (cont.style.display==='block') ? 'none' : 'block';
+        }
 
-    function postComment(b) {
-        const txt = b.previousElementSibling.value.trim();
-        if (txt) alert('Comentaste: ' + txt);
-        b.previousElementSibling.value = '';
-    }
+        function postComment(btnSend){
+            const txtArea = btnSend.previousElementSibling;
+            const txt = txtArea.value.trim();
+            if (!txt) return;
 
-    // Cerrar dropdown al clicar fuera
-    document.addEventListener('click', e => {
-        document.querySelectorAll('.options-dropdown.show').forEach(dd => {
-            if (!dd.contains(e.target) && !dd.previousElementSibling.contains(e.target))
-                dd.classList.remove('show');
+            const contPost = btnSend.closest('.post-container');
+            const pubId    = contPost.dataset.pubid;              // ③
+
+            fetch(`${ctx}/ControladorComentarios`,{
+                method : 'POST',
+                headers: {'Content-Type':'application/x-www-form-urlencoded'},
+                body   : `pub=${pubId}&txt=${encodeURIComponent(txt)}`
+            })
+                .then(r => r.json())
+                .then(() => {
+                    const divOld = contPost.querySelector('.comentarios-antiguos');
+                    divOld.appendChild(creaHtmlComentario("<%= usuario.getUsername() %>", txt));
+                    txtArea.value = '';
+                })
+                .catch(()=>alert('Error al comentar'));
+        }
+
+        function creaHtmlComentario(user, texto){
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>@${user}</strong>: ${texto}`;
+            return p;
+        }
+
+        /* ===== overlay seguidores –– usa la misma ctx, NO la redeclares ===== */
+        document.querySelectorAll('.link-follow').forEach(a=>{
+            a.addEventListener('click',e=>{
+                e.preventDefault();
+                const tipo = a.dataset.tipo;                 // seguidores | siguiendo
+                fetch(`${ctx}/ControladorSeguimientos?tipo=${tipo}&ajax=1`)
+                    .then(r=>r.json())
+                    .then(datos=>{
+                        rellenarOverlay(tipo,datos);
+                        document.getElementById('overlay-follows').style.display='flex';
+                    })
+                    .catch(()=>alert('No se pudo cargar '+tipo));
+            });
         });
-    });
 </script>
 
 <!-- ░░░░░░░░░░  OVERLAY LISTA DE SEGUIMIENTOS ░░░░░░░░░░ -->
@@ -244,7 +271,6 @@
 <!-- ==========  JS del overlay  ========== -->
 <script>
     /* ---------- overlay seguimientos ---------- */
-    const ctx = '<%= request.getContextPath() %>';   //  ←  /rscua_war_exploded  (por ejemplo)
 
     document.querySelectorAll('.link-follow').forEach(el=>{
         el.addEventListener('click', ev=>{

@@ -125,6 +125,10 @@ public class ControladorInicioSesion extends HttpServlet {
             session.setAttribute("configuracion", configuracion);
 
             request.setAttribute("mensaje", "Inicio de sesión exitoso");
+
+            //Aqui debe ir el MS Autenticaciön
+            //Para cargar la info y mandarla al Controlador Feed
+
 //            request.getRequestDispatcher("vista/IU_Feed.jsp")
 //                    .forward(request, response);
             response.sendRedirect("ControladorFeed");

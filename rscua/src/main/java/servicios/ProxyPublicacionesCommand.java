@@ -1,9 +1,13 @@
 package servicios;
 
+import modulo.gestorPublicaciones.Comentario;
 import modulo.gestorPublicaciones.Publicaciones;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProxyPublicacionesCommand {
     private Conexion conexion;
@@ -45,4 +49,38 @@ public class ProxyPublicacionesCommand {
             return cs.executeUpdate() > 0;
         }
     }
+
+    /* insertar y devolver id nuevo */
+    public int crearComentario(int userId, int pubId, String texto) throws SQLException {
+        String call = "{CALL sp_crear_comentario(?,?,?)}";
+        try (CallableStatement cs = conexion.getConexion().prepareCall(call)) {
+            cs.setInt   (1, userId);
+            cs.setInt   (2, pubId);
+            cs.setString(3, texto);
+            ResultSet rs = cs.executeQuery();
+            return rs.next() ? rs.getInt("nuevo_id") : -1;
+        }
+    }
+
+    /* listar */
+    public List<Comentario> listarPorPublicacion(int pubId) throws SQLException {
+        List<Comentario> list = new ArrayList<>();
+        String call = "{CALL sp_listar_comentarios(?)}";
+        try (CallableStatement cs = conexion.getConexion().prepareCall(call)) {
+            cs.setInt(1, pubId);
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                Comentario c = new Comentario();
+                c.setId          (rs.getInt("id"));
+                c.setUsuarioId   (rs.getInt("usuario_id"));
+                c.setContenido   (rs.getString("contenido"));
+                c.setFecha       (rs.getTimestamp("fecha"));
+                c.setUsername(rs.getString("username"));
+                c.setPublicacionId(pubId);
+                list.add(c);
+            }
+        }
+        return list;
+    }
+
 }
