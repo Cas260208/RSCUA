@@ -161,44 +161,91 @@
 <div class="comunidades">
     <h1>Explora Comunidades</h1>
 
-    <c:forEach var="comunidad" items="${['Tecnología', 'Libros', 'Gaming', 'Arte y Diseño', 'Fitness y Salud', 'Viajeros del Mundo', 'Cine y Series', 'Emprendedores']}">
-        <div class="comunidad-item">
+    <c:set var="comunidades">
+        <c:set var="comunidad1" value="${{'id': 1, 'nombre': 'Tecnología', 'descripcion': 'Comunidad de tecnología y desarrollo'}}" />
+        <c:set var="comunidad2" value="${{'id': 2, 'nombre': 'Libros', 'descripcion': 'Amantes de la lectura'}}" />
+        <c:set var="comunidad3" value="${{'id': 3, 'nombre': 'Gaming', 'descripcion': 'Videojuegos y eSports'}}" />
+        <c:set var="comunidad4" value="${{'id': 4, 'nombre': 'Arte y Diseño', 'descripcion': 'Creatividad artística'}}" />
+        <c:set var="comunidad5" value="${{'id': 5, 'nombre': 'Fitness y Salud', 'descripcion': 'Vida saludable'}}" />
+        <c:set var="comunidad6" value="${{'id': 6, 'nombre': 'Viajeros del Mundo', 'descripcion': 'Aventuras y viajes'}}" />
+        <c:set var="comunidad7" value="${{'id': 7, 'nombre': 'Cine y Series', 'descripcion': 'Entretenimiento audiovisual'}}" />
+        <c:set var="comunidad8" value="${{'id': 8, 'nombre': 'Emprendedores', 'descripcion': 'Negocios y startups'}}" />
+        <c:set var="comunidadesList" value="${[comunidad1, comunidad2, comunidad3, comunidad4, comunidad5, comunidad6, comunidad7, comunidad8]}" />
+    </c:set>
+
+    <c:forEach var="comunidad" items="${comunidadesList}">
+        <div class="comunidad-item" data-comunidad-id="${comunidad.id}">
             <div class="comunidad-info">
-                <h2>${comunidad}</h2>
-                <p>Descripción de la comunidad ${comunidad.toLowerCase()}.</p>
+                <h2>${comunidad.nombre}</h2>
+                <p>${comunidad.descripcion}</p>
             </div>
             <div class="acciones">
-                <button onclick="mostrarModal('¿Deseas unirte a ${comunidad}?')">Unirse</button>
-                <button onclick="mostrarModal('¿Deseas reportar la comunidad ${comunidad}?')">Reportar</button>
+                <button onclick="manejarAccion('unirse', ${comunidad.id})">Unirse</button>
+                <button onclick="manejarAccion('reportar', ${comunidad.id})">Reportar</button>
             </div>
         </div>
     </c:forEach>
 </div>
 
-<!-- Modal emergente -->
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="cerrar" onclick="cerrarModal()">&times;</span>
         <p id="mensaje-modal">Mensaje de confirmación</p>
-        <button onclick="cerrarModal()">Aceptar</button>
+        <button id="btn-confirmar" onclick="confirmarAccion()">Aceptar</button>
     </div>
 </div>
 
 <script>
-    function mostrarModal(mensaje) {
+    let accionActual = '';
+    let comunidadIdActual = 0;
+
+    function manejarAccion(accion, id) {
+        accionActual = accion;
+        comunidadIdActual = id;
+
+        const mensaje = accion === 'unirse'
+            ? `¿Deseas unirte a la comunidad? (ID: ${id})`
+            : `¿Reportar la comunidad? (ID: ${id})`;
+
         document.getElementById("mensaje-modal").innerText = mensaje;
         document.getElementById("modal").style.display = "block";
+    }
+
+    function confirmarAccion() {
+        // Crear formulario oculto para enviar al controlador
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'ControladorFeedComunidades';
+
+        // Input para la acción
+        const inputAccion = document.createElement('input');
+        inputAccion.type = 'hidden';
+        inputAccion.name = 'accion';
+        inputAccion.value = accionActual;
+        form.appendChild(inputAccion);
+
+        // Input para el ID
+        const inputId = document.createElement('input');
+        inputId.type = 'hidden';
+        inputId.name = 'comunidadId';
+        inputId.value = comunidadIdActual;
+        form.appendChild(inputId);
+
+        // Enviar formulario
+        document.body.appendChild(form);
+        form.submit();
+
+        cerrarModal();
     }
 
     function cerrarModal() {
         document.getElementById("modal").style.display = "none";
     }
 
-    // Cierre al hacer clic fuera del modal
     window.onclick = function(event) {
         const modal = document.getElementById("modal");
         if (event.target === modal) {
-            modal.style.display = "none";
+            cerrarModal();
         }
     }
 </script>

@@ -6,6 +6,10 @@ public class Comunidad {
     private int miembros;
     private boolean registrado;
 
+    private PublicacionesComunidad publicaciones;
+    private MensajesComunidad mensajes;
+    private NotificacionesComunidad notificaciones;
+
     public String getNombre() {
         return nombre;
     }
@@ -37,4 +41,5 @@ public class Comunidad {
     public void setRegistrado(boolean registrado) {
         this.registrado = registrado;
     }
+
 }
