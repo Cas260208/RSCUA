@@ -7,10 +7,8 @@ public class SolicitudComunidad {
     private int miembros;
     private boolean registrado;
 
-    // Constructor vacío
     public SolicitudComunidad() {}
 
-    // Constructor con todos los campos
     public SolicitudComunidad(int id, String nombre, String descripcion, int miembros, boolean registrado) {
         this.id = id;
         this.nombre = nombre;
@@ -19,7 +17,6 @@ public class SolicitudComunidad {
         this.registrado = registrado;
     }
 
-    // Getters y Setters
     public int getId() {
         return id;
     }

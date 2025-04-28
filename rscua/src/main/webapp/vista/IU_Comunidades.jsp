@@ -212,7 +212,6 @@
     }
 
     function confirmarAccion() {
-        // Crear formulario oculto para enviar al controlador
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = 'ControladorFeedComunidades';
